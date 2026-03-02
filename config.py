@@ -55,7 +55,7 @@ TARGET_VENUES = [
 # Claude API 설정
 # ============================================================
 CLAUDE_MODEL = "claude-sonnet-4-5-20250929"
-MAX_PAPERS_TO_SUMMARIZE = 20
+MAX_PAPERS_TO_SUMMARIZE = 5
 MIN_RELEVANCE_SCORE = 6  # 이 점수 이상만 포함
 
 RESEARCH_CONTEXT = """You are a research assistant for a postdoctoral HCI researcher at the University of Notre Dame. Their research focuses on:
