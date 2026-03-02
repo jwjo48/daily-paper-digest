@@ -1,0 +1,49 @@
+# =============================================================
+# Daily Paper Digest — GitHub Actions 워크플로우
+# 매일 평일 아침 자동 실행 + 수동 실행 가능
+# =============================================================
+
+name: Daily Paper Digest
+
+on:
+  schedule:
+    # UTC 12:00 = EST 07:00 = KST 21:00
+    # 월-금 실행 (주말 제외)
+    - cron: '0 12 * * 1-5'
+
+  # 수동 실행 버튼 (GitHub Actions 탭에서)
+  workflow_dispatch:
+
+jobs:
+  fetch-and-notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Daily Digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          S2_API_KEY: ${{ secrets.S2_API_KEY }}
+          CI: 'true'
+        run: python daily_digest.py
+
+      # (선택) 생성된 마크다운을 artifact로 저장
+      # 나중에 다운로드해서 vault에 넣을 수 있음
+      - name: Upload digest as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: paper-digest-${{ github.run_number }}
+          path: /tmp/daily-papers/
+          retention-days: 30
+          if-no-files-found: ignore

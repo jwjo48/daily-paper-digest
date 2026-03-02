@@ -1,0 +1,14 @@
+# daily-paper-digest requirements
+# 핵심 기능은 Python 표준 라이브러리만 사용합니다 (urllib, json, xml)
+# 아래는 선택적 확장을 위한 패키지들입니다.
+
+# (선택) 로컬 테스트 시 편의를 위해
+# pip install -r requirements.txt
+
+# 현재 모든 핵심 기능이 표준 라이브러리로 구현되어 있으므로
+# 추가 패키지 설치 없이 바로 실행 가능합니다.
+#
+# 향후 확장 시:
+# anthropic        # Claude Python SDK (현재는 urllib로 직접 호출)
+# arxiv            # arXiv Python 클라이언트 (현재는 urllib+XML로 직접 처리)
+# semanticscholar  # S2 Python 클라이언트 (현재는 urllib로 직접 호출)
