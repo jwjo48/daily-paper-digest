@@ -89,14 +89,18 @@ def _generate_digest(papers: list[dict], today: str) -> str:
             lines.append(f" | [PDF]({p['pdf_url']})")
         lines.append("")
 
-        # 한국어 요약
-        if p.get("summary_ko"):
-            lines.append(f"**🇰🇷 요약:** {p['summary_ko']}")
+        # 4-section Korean summary
+        if p.get("background"):
+            lines.append(f"**🎯 배경/목적:** {p['background']}")
             lines.append("")
-
-        # 영어 요약
-        if p.get("summary_en"):
-            lines.append(f"**🇺🇸 Summary:** {p['summary_en']}")
+        if p.get("methods"):
+            lines.append(f"**🔬 방법:** {p['methods']}")
+            lines.append("")
+        if p.get("results"):
+            lines.append(f"**📊 결과:** {p['results']}")
+            lines.append("")
+        if p.get("conclusion"):
+            lines.append(f"**💡 결론:** {p['conclusion']}")
             lines.append("")
 
         # 연구 연관성
@@ -147,11 +151,17 @@ def _generate_paper_note(paper: dict, today: str) -> str:
 
     lines.extend([
         "",
-        "## 요약 (Korean)",
-        paper.get("summary_ko", "요약 없음"),
+        "## 🎯 배경/목적",
+        paper.get("background", "없음"),
         "",
-        "## Summary (English)",
-        paper.get("summary_en", "No summary"),
+        "## 🔬 방법",
+        paper.get("methods", "없음"),
+        "",
+        "## 📊 결과",
+        paper.get("results", "없음"),
+        "",
+        "## 💡 결론",
+        paper.get("conclusion", "없음"),
         "",
         "## 연구 관련성",
         paper.get("connection", "분석 필요"),
@@ -179,10 +189,11 @@ def _slugify(text: str) -> str:
 
 def _category_emoji(category: str) -> str:
     return {
-        "core_hci": "🖥️",
-        "ai_fairness": "⚖️",
-        "public_benefits": "🏛️",
-        "participatory_design": "🤝",
-        "methodology": "🔬",
+        "human_ai_collab": "🤝",
+        "public_benefits_tech": "🏗️",
+        "low_income_populations": "🛡️",
+        "participatory_design": "🎨",
+        "algorithmic_fairness": "⚖️",
+        "llm_applications": "🧠",
         "ai_general": "🤖",
     }.get(category, "📄")

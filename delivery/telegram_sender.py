@@ -29,14 +29,21 @@ def send_digest_to_telegram(papers: list[dict]) -> bool:
         relevance = p.get("relevance", "?")
         title = _escape_md(p["title"])
         venue = _escape_md(p.get("venue", ""))
-        summary_ko = _escape_md(p.get("summary_ko", ""))
         url = p.get("url", "")
         category_emoji = _category_emoji(p.get("category", ""))
 
         entry = f"{category_emoji} *{i}\\. \\[{relevance}/10\\] {title}*\n"
         if venue:
             entry += f"📍 {venue}\n"
-        entry += f"{summary_ko}\n"
+        entry += "\n"
+        if p.get("background"):
+            entry += f"🎯 *배경/목적:* {_escape_md(p['background'])}\n"
+        if p.get("methods"):
+            entry += f"🔬 *방법:* {_escape_md(p['methods'])}\n"
+        if p.get("results"):
+            entry += f"📊 *결과:* {_escape_md(p['results'])}\n"
+        if p.get("conclusion"):
+            entry += f"💡 *결론:* {_escape_md(p['conclusion'])}\n"
         if url:
             entry += f"[논문 링크]({url})\n"
         entry += "\n"
@@ -54,13 +61,18 @@ def send_digest_to_telegram(papers: list[dict]) -> bool:
         for i, p in enumerate(papers, 1):
             relevance = p.get("relevance", "?")
             title = _escape_md(p["title"])
-            summary_ko = _escape_md(p.get("summary_ko", ""))
             url = p.get("url", "")
             emoji = _category_emoji(p.get("category", ""))
 
-            msg = f"{emoji} *{i}\\. \\[{relevance}/10\\]*\n"
-            msg += f"*{title}*\n"
-            msg += f"{summary_ko}\n"
+            msg = f"{emoji} *{i}\\. \\[{relevance}/10\\]* *{title}*\n\n"
+            if p.get("background"):
+                msg += f"🎯 *배경/목적:* {_escape_md(p['background'])}\n"
+            if p.get("methods"):
+                msg += f"🔬 *방법:* {_escape_md(p['methods'])}\n"
+            if p.get("results"):
+                msg += f"📊 *결과:* {_escape_md(p['results'])}\n"
+            if p.get("conclusion"):
+                msg += f"💡 *결론:* {_escape_md(p['conclusion'])}\n"
             if url:
                 msg += f"[링크]({url})"
 
@@ -138,10 +150,11 @@ def _escape_md(text: str) -> str:
 def _category_emoji(category: str) -> str:
     """카테고리별 이모지"""
     return {
-        "core_hci": "🖥️",
-        "ai_fairness": "⚖️",
-        "public_benefits": "🏛️",
-        "participatory_design": "🤝",
-        "methodology": "🔬",
+        "human_ai_collab": "🤝",
+        "public_benefits_tech": "🏛️",
+        "low_income_populations": "🛡️",
+        "participatory_design": "🎨",
+        "algorithmic_fairness": "⚖️",
+        "llm_applications": "🧠",
         "ai_general": "🤖",
     }.get(category, "📄")

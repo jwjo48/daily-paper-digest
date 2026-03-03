@@ -130,8 +130,10 @@ def _parse_response(response_text: str, original_papers: list[dict]) -> list[dic
             paper = original_papers[i].copy()
             paper.update({
                 "relevance": summary.get("relevance", 0),
-                "summary_ko": summary.get("summary_ko", "요약 없음"),
-                "summary_en": summary.get("summary_en", "No summary"),
+                "background": summary.get("background", ""),
+                "methods": summary.get("methods", ""),
+                "results": summary.get("results", ""),
+                "conclusion": summary.get("conclusion", ""),
                 "connection": summary.get("connection", ""),
                 "category": summary.get("category", "ai_general"),
             })
@@ -148,8 +150,10 @@ def _fallback_summary(papers: list[dict]) -> list[dict]:
         p_copy = p.copy()
         p_copy.update({
             "relevance": 5,
-            "summary_ko": p["abstract"][:200] if p["abstract"] else "초록 없음",
-            "summary_en": p["abstract"][:200] if p["abstract"] else "No abstract",
+            "background": p["abstract"][:200] if p["abstract"] else "초록 없음",
+            "methods": "",
+            "results": "",
+            "conclusion": "",
             "connection": "",
             "category": "ai_general",
         })

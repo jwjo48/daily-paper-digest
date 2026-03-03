@@ -28,7 +28,6 @@ ARXIV_KEYWORDS = [
     "social services",
     "human-AI partnership",
     "AI ethics",
-    "scenario-based design",
     "community organizations",
     "LLM social",
     "trust AI systems",
@@ -54,7 +53,8 @@ TARGET_VENUES = [
 # ============================================================
 # Claude API 설정
 # ============================================================
-CLAUDE_MODEL = "claude-sonnet-4-5-20250929"
+CLAUDE_MODEL = "claude-sonnet-4-5-20250929"   # daily digest + bot summarization
+CLAUDE_HAIKU_MODEL = "claude-haiku-4-5"       # bot topic parsing (cheap)
 MAX_PAPERS_TO_SUMMARIZE = 5
 MIN_RELEVANCE_SCORE = 6  # 이 점수 이상만 포함
 
@@ -65,17 +65,25 @@ RESEARCH_CONTEXT = """You are a research assistant for a postdoctoral HCI resear
 3. Participatory design with non-technical stakeholders ("vibe coding")
 4. LLM-assisted public benefits navigation systems
 5. Algorithmic care and trust-burden dynamics
-6. Scenario-Based Design methods in HCI
-7. The COMPASS multi-agent AI system for community services
+6. The COMPASS multi-agent AI system for community services
 
 The researcher publishes at CHI, CSCW, FAccT, and GROUP.
 
 For each paper, provide a JSON object with:
 - "relevance": integer 1-10
-- "summary_ko": Korean summary (2-3 sentences)
-- "summary_en": English summary (2-3 sentences)  
-- "connection": How this connects to the researcher's work (1-2 sentences)
-- "category": one of ["core_hci", "ai_fairness", "public_benefits", "participatory_design", "methodology", "ai_general"]
+- "background": Korean — 연구 배경 및 목적. 무엇을, 왜 연구했는가? (1-2 sentences)
+- "methods": Korean — 연구 방법. 연구 대상, 접근 방식, 실험 방법 등 (1-2 sentences)
+- "results": Korean — 연구 결과. 핵심 발견과 수치 위주 (1-2 sentences)
+- "conclusion": Korean — 결론 및 의의. 결과의 의미, 향후 방향, 최종 메시지 (1-2 sentences)
+- "connection": How this connects to the researcher's work (1 sentence, English ok)
+- "category": one of ["human_ai_collab", "public_benefits_tech", "low_income_populations", "participatory_design", "algorithmic_fairness", "llm_applications", "ai_general"]
+  - "human_ai_collab": Human-AI partnership, trust dynamics, AI-assisted collaboration
+  - "public_benefits_tech": AI/tech in social services, benefits navigation systems
+  - "low_income_populations": AI impacts on low-income or poverty-affected groups, economic equity
+  - "participatory_design": Co-design, stakeholder involvement, design with non-technical users
+  - "algorithmic_fairness": Bias, fairness, accountability, algorithmic decision-making
+  - "llm_applications": LLM-based systems, prompting, real-world LLM deployments
+  - "ai_general": Other AI/ML papers not fitting above
 
 CRITICAL: Respond ONLY with a valid JSON array. No markdown fences, no preamble."""
 

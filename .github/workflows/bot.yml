@@ -1,0 +1,43 @@
+# =============================================================
+# Telegram Paper Search Bot — GitHub Actions 워크플로우
+# 5분마다 실행, 새 메시지 처리 후 종료
+# =============================================================
+
+name: Telegram Bot (On-Demand Search)
+
+on:
+  schedule:
+    # 매 5분마다 실행 (GitHub Actions 최소 주기)
+    - cron: '*/5 * * * *'
+
+  # 수동 실행 버튼
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4   # 5분 안에 반드시 종료
+
+    # BOT_OFFSET 변수에 vars 접근권 필요
+    environment: production
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run Bot (one polling cycle)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          S2_API_KEY: ${{ secrets.S2_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          BOT_OFFSET: ${{ vars.BOT_OFFSET }}
+          CI: 'true'
+        run: python bot_server.py
