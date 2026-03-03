@@ -97,6 +97,49 @@ def _is_skip(text: str) -> bool:
 def handle_message(chat_id: int, msg_id: int, text: str) -> None:
     text = text.strip()
     cmd = text.lower().split()[0] if text else ""
+    
+    # Check if the user is sending a multi-line formatted search Request
+    # e.g:
+    # /search AI fairness
+    # Venue: FAccT
+    # ...
+    if cmd == "/search" and "\n" in text:
+        # Treat the first line as the command + topic, the rest as parameters.
+        lines = text.split("\n")
+        topic = lines[0].replace("/search", "").strip()
+        if not topic:
+            send(chat_id, "🔍 어떤 주제의 논문을 찾을까요?", reply_to=msg_id)
+            sessions[chat_id] = {"stage": "topic"}
+            return
+            
+        venue, year, count = None, None, DEFAULT_COUNT
+        
+        for line in lines[1:]:
+            lower_line = line.lower()
+            if "venue:" in lower_line:
+                v = line.split(":", 1)[1].strip()
+                if not _is_skip(v): venue = v
+            elif "출판 연도" in lower_line or "연도:" in lower_line or "year:" in lower_line:
+                y = line.split(":", 1)[1].strip()
+                if not _is_skip(y):
+                    try: year = int(y)
+                    except: pass
+            elif "논문 개수" in lower_line or "개수:" in lower_line or "count:" in lower_line:
+                c = line.split(":", 1)[1].strip()
+                if not _is_skip(c):
+                    try: count = int(c)
+                    except: pass
+                    
+        # Start search directly
+        sessions[chat_id] = {
+            "stage": "count", # so it jumps to search
+            "topic": topic,
+            "venue": venue,
+            "year": year,
+            "count": count
+        }
+        _execute_search(chat_id, msg_id, sessions[chat_id])
+        return
 
     # ── Commands ─────────────────────────────────────────────────────────────
     if cmd in ("/start", "/help"):
@@ -190,44 +233,48 @@ def handle_message(chat_id: int, msg_id: int, text: str) -> None:
                 return
 
         # ── All params collected → search ─────────────────────────────────
-        topic = session["topic"]
-        venue = session.get("venue")
-        year = session.get("year")
-        count = session.get("count", DEFAULT_COUNT)
+        _execute_search(chat_id, msg_id, session)
 
-        summary_parts = [f"🔍 검색 중...\n• 주제: <b>{topic}</b>"]
-        if venue:
-            summary_parts.append(f"• Venue: <b>{venue}</b>")
-        if year:
-            summary_parts.append(f"• 연도: <b>{year}</b>")
-        summary_parts.append(f"• 개수: <b>{count}편</b>")
-        send(chat_id, "\n".join(summary_parts), reply_to=msg_id)
 
-        # Search
-        papers = search_papers(topic=topic, venue=venue, year=year, count=count)
+def _execute_search(chat_id: int, msg_id: int, session: dict) -> None:
+    topic = session["topic"]
+    venue = session.get("venue")
+    year = session.get("year")
+    count = session.get("count", DEFAULT_COUNT)
 
-        if not papers:
-            send(chat_id, (
-                "📭 조건에 맞는 논문을 찾지 못했습니다.\n"
-                "Venue나 연도 범위를 넓혀 다시 시도해 보세요.\n\n"
-                "새 검색: /search"
-            ), reply_to=msg_id)
-            sessions.pop(chat_id, None)
-            return
+    summary_parts = [f"🔍 검색 중...\n• 주제: <b>{topic}</b>"]
+    if venue:
+        summary_parts.append(f"• Venue: <b>{venue}</b>")
+    if year:
+        summary_parts.append(f"• 연도: <b>{year}</b>")
+    summary_parts.append(f"• 개수: <b>{count}편</b>")
+    send(chat_id, "\n".join(summary_parts), reply_to=msg_id)
 
-        send(chat_id, f"📚 <b>{len(papers)}편</b> 발견! 요약 생성 중...", reply_to=msg_id)
+    # Search
+    papers = search_papers(topic=topic, venue=venue, year=year, count=count)
 
-        # Summarize
-        scored = summarize_papers(papers)
-        if not scored:
-            scored = papers   # fallback: send without summaries
-
-        # Send each paper
-        for i, p in enumerate(scored, 1):
-            _send_paper(chat_id, i, p)
-
-        send(chat_id, "✅ 검색 완료!\n새 검색: /search")
+    if not papers:
+        send(chat_id, (
+            "📭 조건에 맞는 논문을 찾지 못했습니다.\n"
+            "Venue나 연도 범위를 넓혀 다시 시도해 보세요.\n\n"
+            "새 검색: /search"
+        ), reply_to=msg_id)
         sessions.pop(chat_id, None)
+        return
+
+    send(chat_id, f"📚 <b>{len(papers)}편</b> 발견! 요약 생성 중...", reply_to=msg_id)
+
+    # Summarize
+    scored = summarize_papers(papers)
+    if not scored:
+        scored = papers   # fallback: send without summaries
+
+    # Send each paper
+    for i, p in enumerate(scored, 1):
+        _send_paper(chat_id, i, p)
+
+    send(chat_id, "✅ 검색 완료!\n새 검색: /search")
+    sessions.pop(chat_id, None)
 
 
 def _send_paper(chat_id: int, idx: int, p: dict) -> None:
