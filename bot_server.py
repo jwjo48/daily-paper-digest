@@ -263,49 +263,97 @@ def _send_paper(chat_id: int, idx: int, p: dict) -> None:
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# Offset persistence (GitHub Actions variable)
+# State persistence (GitHub Actions variable)
 # ─────────────────────────────────────────────────────────────────────────────
 
-def load_offset() -> int:
-    """Load offset from env var (set by GitHub Actions or local env)."""
-    return int(os.environ.get("BOT_OFFSET", "0"))
+def load_state() -> tuple[int, dict]:
+    """Load offset and sessions from BOT_STATE env var."""
+    state_str = os.environ.get("BOT_STATE", "{}")
+    try:
+        state = json.loads(state_str)
+        offset = int(state.get("offset", 0))
+        # Ensure sessions keys are ints (json loads them as strings)
+        sessions = {int(k): v for k, v in state.get("sessions", {}).items()}
+        return offset, sessions
+    except Exception as e:
+        print(f"⚠️ State load error: {e}")
+        return int(os.environ.get("BOT_OFFSET", "0")), {}
 
 
-def save_offset(offset: int) -> None:
-    """
-    Persist the new offset.
-    In GitHub Actions, update the repository variable via API.
-    Locally, just print it (user can set it manually).
-    """
+def save_state(offset: int, sessions: dict) -> None:
+    """Persist the offset and sessions."""
+    state = {
+        "offset": offset,
+        "sessions": sessions
+    }
+    state_str = json.dumps(state)
+
     github_token = os.environ.get("GITHUB_TOKEN", "")
     repo = os.environ.get("GITHUB_REPOSITORY", "")
 
     if github_token and repo:
-        _update_github_variable(repo, github_token, "BOT_OFFSET", str(offset))
+        _update_github_variable(repo, github_token, "BOT_STATE", state_str)
     else:
-        print(f"ℹ️  Next BOT_OFFSET={offset}")
+        # local testing fallback: write to a file
+        with open(".bot_state.json", "w") as f:
+            f.write(state_str)
+        print(f"ℹ️  Next BOT_STATE saved locally: offset={offset}")
 
 
 def _update_github_variable(repo: str, token: str, name: str, value: str) -> None:
     """Update a GitHub Actions repository variable via REST API."""
+    # First check if variable exists
     url = f"https://api.github.com/repos/{repo}/actions/variables/{name}"
-    payload = json.dumps({"name": name, "value": value}).encode("utf-8")
-    req = urllib.request.Request(
+    req_get = urllib.request.Request(
         url,
-        data=payload,
         headers={
             "Authorization": f"Bearer {token}",
             "Accept": "application/vnd.github+json",
-            "Content-Type": "application/json",
             "X-GitHub-Api-Version": "2022-11-28",
-        },
-        method="PATCH",
+        }
     )
+    
+    exists = True
+    try:
+        with urllib.request.urlopen(req_get, timeout=10):
+            pass
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            exists = False
+
+    payload = json.dumps({"name": name, "value": value}).encode("utf-8")
+    
+    if exists:
+        req = urllib.request.Request(
+            url,
+            data=payload,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/vnd.github+json",
+                "Content-Type": "application/json",
+                "X-GitHub-Api-Version": "2022-11-28",
+            },
+            method="PATCH",
+        )
+    else:
+        # Create it if it doesn't exist
+        req = urllib.request.Request(
+            f"https://api.github.com/repos/{repo}/actions/variables",
+            data=payload,
+            headers={
+                "Authorization": f"Bearer {token}",
+                "Accept": "application/vnd.github+json",
+                "Content-Type": "application/json",
+                "X-GitHub-Api-Version": "2022-11-28",
+            },
+            method="POST",
+        )
+
     try:
         with urllib.request.urlopen(req, timeout=10):
-            print(f"✅ GitHub variable {name} updated to {value}")
+            print(f"✅ GitHub variable {name} updated to length {len(value)}")
     except Exception as e:
-        print(f"⚠️ GitHub variable 업데이트 실패: {e}")
+        print(f"⚠️ GitHub variable {name} 업데이트 실패: {e}")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -317,8 +365,9 @@ def main():
         print("❌ TELEGRAM_BOT_TOKEN이 설정되지 않았습니다.")
         sys.exit(1)
 
-    offset = load_offset()
-    print(f"🤖 Bot server 시작 (offset={offset})")
+    global sessions
+    offset, sessions = load_state()
+    print(f"🤖 Bot server 시작 (offset={offset}, active sessions={len(sessions)})")
 
     updates = get_updates(offset)
     if not updates:
@@ -342,7 +391,7 @@ def main():
             print(f"⚠️ 메시지 처리 오류: {e}")
             send(chat_id, "⚠️ 처리 중 오류가 발생했습니다. /search 로 다시 시작해 주세요.")
 
-    save_offset(offset)
+    save_state(offset, sessions)
     print(f"✅ 처리 완료 (다음 offset={offset})")
 
 

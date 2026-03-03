@@ -18,9 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 4   # 5분 안에 반드시 종료
 
-    # BOT_OFFSET 변수에 vars 접근권 필요
-    environment: production
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
