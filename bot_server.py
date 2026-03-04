@@ -314,93 +314,32 @@ def _send_paper(chat_id: int, idx: int, p: dict) -> None:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def load_state() -> tuple[int, dict]:
-    """Load offset and sessions from BOT_STATE env var."""
-    state_str = os.environ.get("BOT_STATE", "{}")
+    """Load offset and sessions from .bot_state.json file."""
+    state_file = os.path.join(os.path.dirname(__file__), ".bot_state.json")
     try:
-        state = json.loads(state_str)
+        with open(state_file, "r") as f:
+            state = json.loads(f.read())
         offset = int(state.get("offset", 0))
-        # Ensure sessions keys are ints (json loads them as strings)
         sessions = {int(k): v for k, v in state.get("sessions", {}).items()}
         return offset, sessions
-    except Exception as e:
-        print(f"⚠️ State load error: {e}")
-        return int(os.environ.get("BOT_OFFSET", "0")), {}
+    except (FileNotFoundError, json.JSONDecodeError, ValueError) as e:
+        print(f"⚠️ State load error: {e}, starting fresh")
+        return 0, {}
 
 
 def save_state(offset: int, sessions: dict) -> None:
-    """Persist the offset and sessions."""
+    """Persist the offset and sessions to a local file.
+    
+    In CI, the workflow commits this file back to the repo.
+    """
     state = {
         "offset": offset,
         "sessions": sessions
     }
     state_str = json.dumps(state)
-
-    github_token = os.environ.get("GITHUB_TOKEN", "")
-    repo = os.environ.get("GITHUB_REPOSITORY", "")
-
-    if github_token and repo:
-        _update_github_variable(repo, github_token, "BOT_STATE", state_str)
-    else:
-        # local testing fallback: write to a file
-        with open(".bot_state.json", "w") as f:
-            f.write(state_str)
-        print(f"ℹ️  Next BOT_STATE saved locally: offset={offset}")
-
-
-def _update_github_variable(repo: str, token: str, name: str, value: str) -> None:
-    """Update a GitHub Actions repository variable via REST API."""
-    # First check if variable exists
-    url = f"https://api.github.com/repos/{repo}/actions/variables/{name}"
-    req_get = urllib.request.Request(
-        url,
-        headers={
-            "Authorization": f"Bearer {token}",
-            "Accept": "application/vnd.github+json",
-            "X-GitHub-Api-Version": "2022-11-28",
-        }
-    )
-    
-    exists = True
-    try:
-        with urllib.request.urlopen(req_get, timeout=10):
-            pass
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
-            exists = False
-
-    payload = json.dumps({"name": name, "value": value}).encode("utf-8")
-    
-    if exists:
-        req = urllib.request.Request(
-            url,
-            data=payload,
-            headers={
-                "Authorization": f"Bearer {token}",
-                "Accept": "application/vnd.github+json",
-                "Content-Type": "application/json",
-                "X-GitHub-Api-Version": "2022-11-28",
-            },
-            method="PATCH",
-        )
-    else:
-        # Create it if it doesn't exist
-        req = urllib.request.Request(
-            f"https://api.github.com/repos/{repo}/actions/variables",
-            data=payload,
-            headers={
-                "Authorization": f"Bearer {token}",
-                "Accept": "application/vnd.github+json",
-                "Content-Type": "application/json",
-                "X-GitHub-Api-Version": "2022-11-28",
-            },
-            method="POST",
-        )
-
-    try:
-        with urllib.request.urlopen(req, timeout=10):
-            print(f"✅ GitHub variable {name} updated to length {len(value)}")
-    except Exception as e:
-        print(f"⚠️ GitHub variable {name} 업데이트 실패: {e}")
+    with open(".bot_state.json", "w") as f:
+        f.write(state_str)
+    print(f"✅ State saved: offset={offset}")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
