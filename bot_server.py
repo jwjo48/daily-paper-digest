@@ -29,7 +29,7 @@ from summarizer import summarize_papers
 
 # ── constants ─────────────────────────────────────────────────────────────────
 TELEGRAM_API = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
-POLL_TIMEOUT = 60           # long-poll seconds per getUpdates call
+POLL_TIMEOUT = 30           # long-poll seconds per getUpdates call
 DEFAULT_COUNT = 3
 
 # ── session state (in-memory; reset each run in GitHub Actions) ───────────────

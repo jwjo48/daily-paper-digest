@@ -27,6 +27,9 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
       - name: Run Bot (one polling cycle)
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -35,6 +38,7 @@ jobs:
           S2_API_KEY: ${{ secrets.S2_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          BOT_STATE: ${{ vars.BOT_STATE }}
           BOT_OFFSET: ${{ vars.BOT_OFFSET }}
           CI: 'true'
         run: python bot_server.py
