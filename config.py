@@ -6,6 +6,10 @@ Configuration for Daily Paper Digest
 import os
 from pathlib import Path
 
+# .env 파일에서 환경변수 자동 로드 (Claude Code Routine 등 fresh 환경 지원)
+from load_env import load_dotenv
+load_dotenv()
+
 # ============================================================
 # API Keys (GitHub Secrets 또는 환경변수에서 로드)
 # ============================================================
