@@ -38,7 +38,7 @@ jobs:
       - name: Run daily-digest skill (automated)
         uses: anthropics/claude-code-action@beta
         with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           prompt: |
             Run the /daily-digest skill in automated mode. Today's date is shown in the system context.
 
@@ -54,7 +54,6 @@ jobs:
             If no papers meet the threshold, log "📭 오늘은 관련 논문이 없습니다." and exit cleanly.
           allowed_tools: "Bash,Read,Write,Edit"
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           S2_API_KEY: ${{ secrets.S2_API_KEY }}
