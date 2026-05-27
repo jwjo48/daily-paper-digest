@@ -1,17 +1,15 @@
 # =============================================================
-# Daily Paper Digest — GitHub Actions 워크플로우
-# 매일 평일 아침 자동 실행 + 수동 실행 가능
+# Daily Paper Digest — 레거시 워크플로우 (daily_digest.py 사용)
+# ⚠️ 스케줄 비활성화: daily-digest-skill.yml 이 대체함
+# 수동 실행은 여전히 가능 (workflow_dispatch)
 # =============================================================
 
-name: Daily Paper Digest
+name: Daily Paper Digest (Legacy)
 
 on:
-  schedule:
-    # UTC 12:00 = EST 07:00 (표준시)
-    # ⚠️ DST 기간 (3월 둘째 일요일 ~ 11월 첫째 일요일): EDT 08:00이 됨
-    # DST 중 07:00 EDT를 원하면 → cron: '0 11 * * 1-5'
-    # 월-금 실행 (주말 제외)
-    - cron: '0 12 * * 1-5'
+  # 스케줄 비활성화 — daily-digest-skill.yml 로 대체
+  # schedule:
+  #   - cron: '0 12 * * 1-5'
 
   # 수동 실행 버튼 (GitHub Actions 탭에서)
   workflow_dispatch:

@@ -1,0 +1,59 @@
+# =============================================================
+# Daily Paper Digest — Claude Code Skill 자동화 워크플로우
+# 매일 오전 7시 EST 자동 실행 (주말 포함)
+# =============================================================
+
+name: Daily Paper Digest Skill
+
+on:
+  schedule:
+    # 7am EST = 12:00 UTC
+    # ⚠️ DST 기간 (EDT, UTC-4): 이 시간은 8am EDT가 됨
+    #    7am EDT를 원하면 '0 11 * * *' 로 변경
+    - cron: '0 12 * * *'
+
+  # 수동 실행 버튼 (GitHub Actions 탭에서)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily-digest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily-digest skill (automated)
+        uses: anthropics/claude-code-action@beta
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Run the /daily-digest skill in automated mode. Today's date is shown in the system context.
+
+            Steps to follow:
+            1. Run `python3 collect_papers.py` to collect today's papers into staging/latest.json
+            2. Read staging/latest.json and evaluate each paper per the skill criteria (relevance 1-10, 4-section Korean summary, research connection)
+            3. Include only papers with relevance score 6 or higher, sorted highest first
+            4. For papers with relevance 8 or higher: automatically save them to the appropriate papers/<folder>/ directory using the markdown template from the skill
+            5. git add, commit, and push any saved papers with message: "papers: add N papers to <folder> (YYYY-MM-DD)"
+            6. Output the full digest summary (all papers 6+) to the action log so it's visible in GitHub Actions
+
+            Skip the interactive selection prompt — this is a scheduled automated run.
+            If no papers meet the threshold, log "📭 오늘은 관련 논문이 없습니다." and exit cleanly.
+          allowed_tools: "Bash,Read,Write,Edit"
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          S2_API_KEY: ${{ secrets.S2_API_KEY }}
