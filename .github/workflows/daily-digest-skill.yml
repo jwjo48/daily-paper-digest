@@ -17,6 +17,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write   # OIDC 인증 (claude-code-action 요구사항)
 
 jobs:
   daily-digest:
@@ -39,7 +40,13 @@ jobs:
         uses: anthropics/claude-code-action@beta
         with:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
-          prompt: |
+          mode: 'agent'
+          allowed_tools: "Bash,Read,Write,Edit"
+          claude_env: |
+            TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+            TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+            S2_API_KEY: ${{ secrets.S2_API_KEY }}
+          direct_prompt: |
             Run the /daily-digest skill in automated mode. Today's date is shown in the system context.
 
             Steps to follow:
@@ -52,8 +59,3 @@ jobs:
 
             Skip the interactive selection prompt — this is a scheduled automated run.
             If no papers meet the threshold, log "📭 오늘은 관련 논문이 없습니다." and exit cleanly.
-          allowed_tools: "Bash,Read,Write,Edit"
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          S2_API_KEY: ${{ secrets.S2_API_KEY }}
