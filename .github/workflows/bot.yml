@@ -1,16 +1,18 @@
 # =============================================================
 # Telegram Paper Search Bot — GitHub Actions 워크플로우
-# 5분마다 실행, 새 메시지 처리 후 종료
+# ⚠️ 이 워크플로우는 ANTHROPIC_API_KEY (pay-per-use API) 를 사용합니다.
+#    Max 플랜만 쓰려는 정책에 따라 스케줄 비활성화. 수동 실행도 권장하지 않음.
+#    이 봇을 다시 쓰려면 Claude Code Action (OAuth 토큰) 기반으로 재작성 필요.
 # =============================================================
 
-name: Telegram Bot (On-Demand Search)
+name: Telegram Bot (On-Demand Search) [DISABLED — uses API]
 
 on:
-  schedule:
-    # 매 5분마다 실행 (GitHub Actions 최소 주기)
-    - cron: '*/5 * * * *'
+  # 스케줄 비활성화 — API 사용 중단
+  # schedule:
+  #   - cron: '*/5 * * * *'
 
-  # 수동 실행 버튼
+  # 수동 실행 버튼 (실행 시 API 크레딧 소모됨, 주의)
   workflow_dispatch:
 
 jobs:
