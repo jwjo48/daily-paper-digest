@@ -56,6 +56,9 @@ jobs:
             4. For papers with relevance 8 or higher: automatically save them to the appropriate papers/<folder>/ directory using the markdown template from the skill
             5. git add, commit, and push any saved papers with message: "papers: add N papers to <folder> (YYYY-MM-DD)"
             6. Output the full digest summary (all papers 6+) to the action log so it's visible in GitHub Actions
+            7. Send the digest to Telegram so the user gets a phone notification:
+               a. Write the evaluated papers (relevance ≥6) to staging/digest.json as a JSON array. Each item must have keys: title, venue, url, category, relevance, background, methods, results, conclusion. The `category` must be one of: human_ai_collab, public_benefits_tech, low_income_populations, participatory_design, algorithmic_fairness, llm_applications, ai_general.
+               b. Run: `python3 -c "import json; from delivery.telegram_sender import send_digest_to_telegram; send_digest_to_telegram(json.load(open('staging/digest.json')))"`
+               c. If no papers met the threshold, still call `send_digest_to_telegram([])` so the user is notified there are no papers today.
 
             Skip the interactive selection prompt — this is a scheduled automated run.
-            If no papers meet the threshold, log "📭 오늘은 관련 논문이 없습니다." and exit cleanly.
