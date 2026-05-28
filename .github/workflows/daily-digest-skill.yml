@@ -43,9 +43,9 @@ jobs:
           mode: 'agent'
           allowed_tools: "Bash,Read,Write,Edit"
           claude_env: |
-            TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-            TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-            S2_API_KEY: ${{ secrets.S2_API_KEY }}
+            TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+            TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+            S2_API_KEY=${{ secrets.S2_API_KEY }}
           direct_prompt: |
             Run the daily-digest collection + Telegram-interactive flow. Today's date is in system context.
 
