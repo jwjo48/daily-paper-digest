@@ -43,22 +43,86 @@ jobs:
           mode: 'agent'
           allowed_tools: "Bash,Read,Write,Edit"
           claude_env: |
-            TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-            TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-            S2_API_KEY: ${{ secrets.S2_API_KEY }}
+            TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}
+            TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}
+            S2_API_KEY=${{ secrets.S2_API_KEY }}
           direct_prompt: |
-            Run the /daily-digest skill in automated mode. Today's date is shown in the system context.
+            Run the daily-digest collection + Telegram-interactive flow. Today's date is in system context.
 
-            Steps to follow:
-            1. Run `python3 collect_papers.py` to collect today's papers into staging/latest.json
-            2. Read staging/latest.json and evaluate each paper per the skill criteria (relevance 1-10, 4-section Korean summary, research connection)
-            3. Include only papers with relevance score 6 or higher, sorted highest first
-            4. For papers with relevance 8 or higher: automatically save them to the appropriate papers/<folder>/ directory using the markdown template from the skill
-            5. git add, commit, and push any saved papers with message: "papers: add N papers to <folder> (YYYY-MM-DD)"
-            6. Output the full digest summary (all papers 6+) to the action log so it's visible in GitHub Actions
-            7. Send the digest to Telegram so the user gets a phone notification:
-               a. Write the evaluated papers (relevance ≥6) to staging/digest.json as a JSON array. Each item must have keys: title, venue, url, category, relevance, background, methods, results, conclusion. The `category` must be one of: human_ai_collab, public_benefits_tech, low_income_populations, participatory_design, algorithmic_fairness, llm_applications, ai_general.
-               b. Run: `python3 -c "import json; from delivery.telegram_sender import send_digest_to_telegram; send_digest_to_telegram(json.load(open('staging/digest.json')))"`
-               c. If no papers met the threshold, still call `send_digest_to_telegram([])` so the user is notified there are no papers today.
+            ⚠️ DO NOT save any markdown files to papers/. The user picks papers via Telegram reply; saving is handled by a separate workflow (process_digest_reply.py).
 
-            Skip the interactive selection prompt — this is a scheduled automated run.
+            Steps:
+
+            1. Run `python3 collect_papers.py` to collect papers into staging/latest.json.
+
+            2. Read staging/latest.json. For each paper, evaluate:
+               - relevance (1-10 integer)
+               - 4-section Korean summary: background, methods, results, conclusion (1-2 sentences each)
+               - connection: 1-sentence English research connection
+               - category: one of human_ai_collab | public_benefits_tech | low_income_populations | participatory_design | algorithmic_fairness | llm_applications | ai_general
+               Use the researcher context from `.claude/skills/daily-digest/SKILL.md`.
+
+            3. Keep only papers with relevance ≥ 6, sorted highest first.
+
+            4. List subdirectories of `papers/` alphabetically, assign letters A, B, C, ... to each (e.g. A→"AI General", B→"Algorithmic Fairness", ...).
+
+            5. Write `staging/digest.json` with this exact structure:
+               {
+                 "date": "YYYY-MM-DD",
+                 "folders": {"A": "<folder name>", "B": "...", ...},
+                 "papers": [
+                   {
+                     "number": 1,
+                     "title": "...", "authors": "...", "url": "...", "venue": "...", "date": "...",
+                     "relevance": 9, "category": "human_ai_collab",
+                     "background": "...", "methods": "...", "results": "...", "conclusion": "...",
+                     "connection": "..."
+                   },
+                   ...
+                 ]
+               }
+
+            6. Send to Telegram using urllib (no external libs). Use TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID from env:
+
+               a. If NO papers met threshold: send ONE message "📭 오늘은 관련 논문이 없습니다. ({today})" and skip steps 6b, 6c, and 7.
+
+               b. Otherwise, send a header message:
+                  "📚 오늘의 논문 N편 ({today})"
+
+                  Then send EACH paper as a SEPARATE message (so they're readable on phone). Each paper message (plain text, no parse_mode):
+                  ```
+                  {number}. [{relevance}/10] {title}
+                  📍 {venue}
+
+                  🎯 배경: {background}
+                  🔬 방법: {methods}
+                  📊 결과: {results}
+                  💡 결론: {conclusion}
+
+                  🔗 {connection}
+                  📎 {url}
+                  ```
+
+               c. Send a FINAL "picker" message:
+                  ```
+                  📂 저장할 폴더 선택
+
+                  A) AI General
+                  B) Algorithmic Fairness
+                  ...
+                  (N으로 시작하면 새 폴더 만들기)
+
+                  답장 형식:
+                  • 1,3 → A
+                  • 2 → N:Benefits Navigation
+                  • 1,3 → A, 2 → N:새폴더
+
+                  저장 안 함: skip 또는 0
+                  ```
+
+            7. git add staging/digest.json && git commit -m "digest: {today} (N papers)" && git push
+               Use the github-actions[bot] identity for the commit.
+
+            8. Log the digest summary to stdout for the Actions log.
+
+            Do NOT touch papers/ directory at all in this run.

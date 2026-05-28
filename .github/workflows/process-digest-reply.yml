@@ -1,0 +1,42 @@
+# =============================================================
+# Process Digest Reply — Telegram 답장 처리 (API 미사용)
+# 10분마다 폴링, 답장이 오면 사용자가 선택한 논문 저장
+# =============================================================
+
+name: Process Digest Reply
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'   # 10분마다
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: digest-reply
+  cancel-in-progress: false
+
+jobs:
+  process:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run reply processor
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python3 process_digest_reply.py
