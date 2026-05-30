@@ -1,5 +1,5 @@
 {
-  "date": "2026-05-29",
+  "date": "2026-05-30",
   "folders": {
     "A": "AI General",
     "B": "Algorithmic Fairness", 
@@ -8,5 +8,96 @@
     "E": "Participatory Design",
     "F": "Public Benefits"
   },
-  "papers": []
+  "papers": [
+    {
+      "number": 1,
+      "title": "Addressing discrimination in algorithmic profiling: Examining risk governance in Dutch public social security agencies",
+      "authors": "Lucas M. Haitsma",
+      "url": "https://www.semanticscholar.org/paper/bbf1b122bb8318c9baab104088874e1559a19616",
+      "venue": "European Journal of Social Security",
+      "date": "2025-06-01",
+      "relevance": 9,
+      "category": "algorithmic_fairness",
+      "background": "네덜란드 사회보장 기관에서 알고리즘 프로파일링의 무책임한 사용이 차별을 야기하는 문제를 다룹니다. 기본권, GDPR, AI법이 요구하는 차별 위험 식별과 완화 의무가 실제 구현에서는 제한적 지침만을 제공하는 상황입니다.",
+      "methods": "두 개의 네덜란드 사회보장 기관을 대상으로 케이스 스터디를 진행하고, 문서 분석을 통해 체계적 위험 거버넌스 원칙(소통과 포용, 통합, 성찰)을 이론적 프레임워크로 활용했습니다.",
+      "results": "사회보장 기관들이 알고리즘 프로파일링의 차별 위험을 해결하는 과정에서 사회기술적 복잡성, 과학적 불확실성, 사회법적 모호성으로 인해 어려움을 겪고 있음을 확인했습니다.",
+      "conclusion": "공공 사회보장에서의 알고리즘 차별을 방지하기 위해서는 체계적 위험 거버넌스 접근법이 필요하며, 기술적 해결책을 넘어서는 포괄적 프레임워크가 요구됩니다.",
+      "connection": "This work directly addresses algorithmic fairness in public benefit systems, providing governance frameworks for mitigating discrimination risks that vulnerable populations face when accessing social services."
+    },
+    {
+      "number": 2,
+      "title": "AI-Centric Data Analytics in Public Behavioral Health Care",
+      "authors": "R. Thomas",
+      "url": "https://www.semanticscholar.org/paper/23af92541c7555080a3a88c6236b898db0a432b6",
+      "venue": "International Journal of Computing and Engineering",
+      "date": "2025-07-24",
+      "relevance": 8,
+      "category": "public_benefits_tech",
+      "background": "인공지능 기반 데이터 인텔리전스가 공공 행동 건강 관리에서 패러다임 전환을 가져오며, 복잡한 데이터셋에서 의미 있는 통찰을 추출할 수 있는 전례 없는 능력을 제공합니다. 개인 맞춤형 개입, 조기 위험 감지, 인구 전반의 자원 배분 최적화를 가능하게 합니다.",
+      "methods": "전자건강기록, 사회적 결정요인 데이터, 행동 지표, 웨어러블 기기 입력을 통합하여 임상 의사결정을 위한 포괄적 기반을 구축하고, 고급 패턴 인식, 자연어 처리, 예측 모델링을 활용했습니다.",
+      "results": "위기 시점 이전에 위험군 개인을 식별하고, 서비스가 부족한 지역사회의 서비스 격차를 해소하며, 증거 기반 치료 권고안을 생성할 수 있음을 보여줬습니다.",
+      "conclusion": "데이터 프라이버시 우려, 잠재적 알고리즘 편향, 시스템 상호 운용성 장벽 등의 구현 과제가 있지만, AI 기술이 공공 정신건강 서비스 전달을 혁신할 수 있는 잠재력을 확인했습니다.",
+      "connection": "This research demonstrates AI applications in public behavioral health services, showing how data analytics can improve access to mental health care for underserved communities."
+    },
+    {
+      "number": 3,
+      "title": "Visibility into Agentic AI for Required System Theory and Increasing Harms in Algorithmic System",
+      "authors": "Naveen Kunchakuri, V. L. Patchigolla, Abhilash Shashikumar Kedlaya, Tejas Upreti",
+      "url": "https://www.semanticscholar.org/paper/1053390818795d37287dba97679356d1052e8cca",
+      "venue": "2025 7th International Conference on Information Systems and Computer Networks (ISCON)",
+      "date": "2025-09-05",
+      "relevance": 8,
+      "category": "algorithmic_fairness",
+      "background": "최소한의 직접 감독으로 복잡한 목표를 추구할 수 있는 에이전틱 AI 시스템의 성공적 문화 통합 가능성을 탐구합니다. 공정성, 책임성, 투명성, 윤리 영역의 연구가 알고리즘 피해의 다양한 원인과 형태를 식별했습니다.",
+      "methods": "경찰, 추천 시스템, 건강 관리, 금융 등 다양한 분야에서 나타나는 알고리즘 피해를 체계적으로 분석하고, 특히 취약한 지역사회에 불균형적으로 악영향을 미치는 시스템들을 중심으로 검토했습니다.",
+      "results": "기계학습에 의존하는 AI 시스템이 빠른 속도로 발전하며 일상 경험을 변화시키고 있지만, 프라이버시, 투명성, 편향, 차별, 착취, 배제 등의 단점도 존재함을 확인했습니다.",
+      "conclusion": "공정성 보장에 중점을 둔 상당한 노력이 필요하며, 특히 취약 계층에 대한 엄청한 피해를 완화하기 위해서는 지속적인 연구와 대책 마련이 필수적입니다.",
+      "connection": "This work examines algorithmic harms across multiple sectors, emphasizing the disproportionate impact on disadvantaged communities and the need for fairness-focused AI governance."
+    },
+    {
+      "number": 4,
+      "title": "The Role of Artificial Intelligence in Improving the Public Health Care Delivery System in India: A Legal-Ethical Audit",
+      "authors": "N. Khalique, Mohammad Nasir, Samreen Ahmed, Kaif Siddiqui",
+      "url": "https://www.semanticscholar.org/paper/9ac4e637ce74e3b9f59d2d2424209fae1bf36652",
+      "venue": "Indian Journal of Community Medicine",
+      "date": "2026-01-13",
+      "relevance": 7,
+      "category": "public_benefits_tech",
+      "background": "인공지능이 인도의 공공 의료 전달 시스템에서 인프라 부족, 의사 부족, 접근성 문제를 해결하며 헬스케어를 혁신하고 있습니다. 진단, 데이터 분석, 추세 분석, 정밀 의료를 향상시킵니다.",
+      "methods": "2018-2025년 PubMed, SCOPUS, 법률 데이터베이스의 AI와 헬스케어 교차점에 관한 기존 문헌을 법적, 윤리적 이슈 관점에서 검토하고, 감사 메커니즘을 제안했습니다.",
+      "results": "AI가 의사의 전문성을 보완하여 환자 결과를 개선할 수 있는 잠재력을 확인했지만, AI 시스템의 설명 불가능성과 '블랙박스' 문제로 인한 복잡성도 발견했습니다.",
+      "conclusion": "AI 기반 헬스케어를 규제하기 위한 강력한 법적 프레임워크가 필요하며, 의사, 윤리학자, 프로그래머 등 다양한 이해관계자들의 협력이 요구됩니다.",
+      "connection": "This research addresses legal and ethical frameworks for AI in public healthcare delivery, particularly relevant for ensuring equitable access to AI-enhanced medical services in developing countries."
+    },
+    {
+      "number": 5,
+      "title": "Conditions of benefits and risks when algorithmic technology is implemented for public sector policing and fraud detection: a systematic literature review",
+      "authors": "Spencer Poodiack Parsons, R. Torenvlied",
+      "url": "https://www.semanticscholar.org/paper/2265c61dddce42690f71af34c5c02e02b2ebe1ae",
+      "venue": "AI & SOCIETY",
+      "date": "2026-03-10",
+      "relevance": 7,
+      "category": "algorithmic_fairness",
+      "background": "공공 부문에서 경찰 활동과 사기 탐지를 위한 알고리즘 기술 구현 시 나타나는 이익과 위험의 조건들을 체계적으로 검토합니다.",
+      "methods": "체계적 문헌 검토를 통해 공공 부문 경찰과 사기 탐지에서 알고리즘 기술의 활용 사례와 그 결과를 분석했습니다.",
+      "results": "알고리즘 기술이 공공 부문에서 효율성을 높일 수 있지만, 동시에 편향과 차별의 위험도 수반함을 확인했습니다.",
+      "conclusion": "공공 부문에서 알고리즘 기술의 성공적 도입을 위해서는 이익과 위험을 균형 있게 고려한 신중한 접근이 필요합니다.",
+      "connection": "This systematic review examines algorithmic implementation in public sector services, providing insights into risk-benefit analysis for AI deployment in government operations affecting citizen welfare."
+    },
+    {
+      "number": 6,
+      "title": "Algorithmic Administration and the EU AI Act: Legal Principles for Public Sector Use of AI",
+      "authors": "Georgios Pavlidis, Ioannis Kastanas",
+      "url": "https://arxiv.org/abs/2604.22765",
+      "venue": "Social Science Research Network",
+      "date": "2026-03-24",
+      "relevance": 7,
+      "category": "algorithmic_fairness",
+      "background": "공공 기관의 인공지능 사용 증가가 혁신의 기회와 행정법 지배의 중대한 과제를 동시에 제시합니다. EU AI법이 행정법의 기본 원칙들과 어떻게 상호작용하는지 살펴봅니다.",
+      "methods": "EU AI법이 고위험 시스템의 공공 부문 배치자들에게 부과하는 규제 의무를 분석하고, 특히 사회적 혜택, 이민, 교육, 법 집행과 같은 민감한 영역에 중점을 둡니다.",
+      "results": "AI법의 위험 기반 접근법이 비례성 원칙과 일치하는지(또는 실패하는지)를 탐구하고, 자동화된 공공 의사결정에서 책임성, 투명성, 검토 가능성을 적절히 보장하는지 분석했습니다.",
+      "conclusion": "공공 행정에서 AI의 윤리적이고 합법적인 배치를 보장하기 위한 보호 장치와 해석 전략을 제안합니다.",
+      "connection": "This work provides legal frameworks for AI deployment in public administration, directly relevant to ensuring algorithmic accountability in government services that affect vulnerable populations."
+    }
+  ]
 }
