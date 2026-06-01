@@ -1,5 +1,5 @@
 {
-  "date": "2026-05-31",
+  "date": "2026-06-01",
   "folders": {
     "A": "AI General",
     "B": "Algorithmic Fairness", 
@@ -8,5 +8,111 @@
     "E": "Participatory Design",
     "F": "Public Benefits"
   },
-  "papers": []
+  "papers": [
+    {
+      "number": 1,
+      "title": "Citizen science and negotiating values in the ethical design of AI-based technologies targeting vulnerable individuals",
+      "authors": "Alessandra Cenci",
+      "url": "https://www.semanticscholar.org/paper/cf6f8e9dfffbb20fe2f431900270c3b26b1d5d9d",
+      "venue": "AI and Ethics",
+      "date": "2025-01-30",
+      "relevance": 10,
+      "category": "participatory_design",
+      "background": "시민 과학 이상을 AI 기반 기술 설계에 적용하는 방법을 탐구한다. 치매 환자를 대상으로 한 AI 기반 추적 앱 설계 과정에서 가치 중립적이라 여겨지는 AI 분야에서의 시민 과학 실현 가능성을 검토한다.",
+      "methods": "덴마크 지방 자치 단체에서 치매 환자의 안전과 복지 향상을 위한 AI 기반 추적 앱의 참여형 설계 과정을 연구했다. 지역 커뮤니티 참여를 통해 전문가와 비전문가 이해관계자들이 시민 과학자로서 참여하는 참여-숙의적 방법론을 사용했다.",
+      "results": "다양한 그룹 간 열린 대화를 통한 대화적 상호작용이 가치 협상에서 핵심적 역할을 한다는 것을 확인했다. 사회적 가치 구성 과정에서 설계 가치들이 어떻게 논의되고, 절충되고, 선택되는지를 파악했다.",
+      "conclusion": "AI 기술 설계에서 시민 과학 이상의 실현은 가능하며, 특히 취약한 개인을 대상으로 하는 기술에서 참여적 접근법이 중요하다. 가치 협상을 위한 대화적 상호작용의 중요성이 강조된다.",
+      "connection": "This directly aligns with participatory design approaches for vulnerable populations and demonstrates how community engagement can shape AI system values."
+    },
+    {
+      "number": 2,
+      "title": "An Ethical Approach to Co-Designing Scalable Digital Health Interventions for Vulnerable Populations",
+      "authors": "R. Vinay, T. Kowatsch", 
+      "url": "https://www.semanticscholar.org/paper/b71cb06e274e7e51b8ad711e9adcbb7ce2c1ba3e",
+      "venue": "Proceedings of the 19th International Joint Conference on Biomedical Engineering Systems and Technologies",
+      "date": "2026",
+      "relevance": 9,
+      "category": "public_benefits_tech",
+      "background": "디지털 헬스 개입(DHI)이 빠르게 확산되고 있지만, 건강 불평등에 가장 영향을 받는 취약 계층(고령자, 여성, 인지 저하자, 저소득층)이 개발 과정에서 종종 배제된다. 이러한 격차를 해소하기 위한 윤리적 공동 설계 프레임워크를 제시한다.",
+      "methods": "Ethics by Design, Value-Sensitive Design, Assessment List for Trustworthy AI의 원칙들을 통합한 윤리적 공동 설계 프레임워크를 개발했다. 윤리적 프레이밍, 참여적 참여, 평가와 책임성, 반복적 성찰의 연속적 순환을 포함하는 실용적 방법론을 제시했다.",
+      "results": "GRACE(초기 치매 환자용 음성 기반 대화 에이전트)와 PreDiaTx(GenAI 기반 정밀 디지털 치료)라는 두 가지 초기 단계 사례 연구를 통해 프레임워크의 적용을 보여주었다. DHI 확장성 향상을 위한 실용적 방법을 제공했다.",
+      "conclusion": "윤리적 성찰을 혁신 생명주기 전반에 걸쳐 내재화하는 것이 취약 계층을 위한 디지털 헬스 개입의 효과적 설계와 확장에 필수적이다. 참여적 접근법과 지속적인 윤리적 평가가 중요하다.",
+      "connection": "This framework directly supports ethical AI development for vulnerable populations accessing health services, aligning with research on public benefits access."
+    },
+    {
+      "number": 3,
+      "title": "Hear Us, then Protect Us: Navigating Deepfake Scams and Safeguard Interventions with Older Adults through Participatory Design",
+      "authors": "Yuxiang Zhai, Xiao Xue, Zekai Guo, Tongtong Jin, Yuting Diao, Jihong Jeung",
+      "url": "https://www.semanticscholar.org/paper/a7a9ed55671483e132cdd9a958fdf6ba6bbe3e5d", 
+      "venue": "International Conference on Human Factors in Computing Systems",
+      "date": "2025-04-25",
+      "relevance": 9,
+      "category": "participatory_design",
+      "background": "딥페이크 기술이 온라인 사기에 새로운 위협을 가하고 있으며, 특히 고령자가 취약하다. 기존 보호 노력은 고령자를 수동적 수혜자로 묘사하며 그들의 관점과 기대를 간과한다. 이러한 격차를 해결하기 위해 참여적 설계 접근법을 사용했다.",
+      "methods": "10명의 고령자와 함께 참여적 설계 워크숍을 실시했다. 참가자들은 모의 딥페이크 사기 동영상을 분석하고 도발적인 보호 설계를 비판했다. 그들의 취약성 요인과 보호 조치에 대한 인식을 파악했다.",
+      "results": "고령자의 취약성에 기여하는 핵심 요인들을 밝혀내고 그들이 보호 조치를 어떻게 인식하는지 파악했다. 고령자의 자율성과 의사결정 역할 존중의 중요성, 자기보호를 위한 향상된 디지털 리터러시의 중요한 역할을 확인했다.",
+      "conclusion": "맞춤형 보호 조치가 필수적이지만, 공유 책임에 초점을 맞춘 더 광범위한 사회적 접근법이 필요하다. 고령자의 관점을 중심에 두는 참여적 설계가 효과적인 보호 전략 개발에 핵심이다.",
+      "connection": "This exemplifies participatory design with vulnerable populations and addresses algorithmic harms through community-centered protection strategies."
+    },
+    {
+      "number": 4,
+      "title": "Empowering Vulnerable Children Through AI: A Participatory Study from Central Europe",
+      "authors": "Alois Daněk, Jarmila Klugerová, František Vlach",
+      "url": "https://www.semanticscholar.org/paper/ed0e946ffb07827d5def69ee3d8c10a187f1f305",
+      "venue": "Brain: Broad Research in Artificial Intelligence and Neuroscience", 
+      "date": "2025-12-05",
+      "relevance": 8,
+      "category": "human_ai_collab",
+      "background": "전 세계 거주형 아동 돌봄 기관의 아동들은 사회적 포용, 개인 발달, 교육 형평성에서 심각한 장벽에 직면한다. 비공식 교육, 문화적 표현, 스포츠를 통합하여 포용과 21세기 역량을 육성하는 국제 프로젝트를 수행했다.",
+      "methods": "참여적 행동 연구 설계와 혼합 방법론을 사용했다. 체코, 슬로바키아, 우크라이나의 거주형 아동 돌봄 기관에서 68명의 아동과 21명의 아동 돌봄 전문가가 참여했다. AI를 교육 계획, 적응형 콘텐츠 생성, 참여적 평가 과정 지원에 통합적으로 활용했다.",
+      "results": "AI가 교육 및 문화적 개입의 질과 개별화를 크게 향상시켰다는 것을 확인했다. 구조화된 5점 리커트 척도 설문지를 통해 예측 정확도, 모니터링 적용 범위, 재해 방지 효과, 커뮤니티 준비성에 대한 인식을 평가했다.",
+      "conclusion": "AI 기술이 취약한 아동의 교육적 결과와 사회적 포용을 크게 개선할 수 있다는 것을 입증했다. 참여적 접근법을 통한 AI 통합이 개별화된 지원과 역량 강화에 효과적이다.",
+      "connection": "This demonstrates AI's potential to empower vulnerable populations through participatory approaches, directly relevant to human-AI partnerships in community service contexts."
+    },
+    {
+      "number": 5,
+      "title": "Supporting \"Stop and Watch\" in Elderly Care with Socially Assistive Robots: Insights from a Participatory Design Workshop",
+      "authors": "Nguyen Tan Viet Tuyen, A. Georgara, Lokesh Singh, Jayati Deshmukh, Sean Davey, Paul N. Tisdale, Sarvapali D. Ramchurn",
+      "url": "https://www.semanticscholar.org/paper/bcf24ea25b964173db14baf4831fff1be33be1be",
+      "venue": "HRI Companion",
+      "date": "2026-03-16", 
+      "relevance": 8,
+      "category": "human_ai_collab",
+      "background": "영국 NHS에서 채택된 'Stop and Watch'는 고령자 돌봄 환경에서 널리 사용되는 조기 경고 도구로, 돌봄 제공자가 거주자의 건강 이상 변화를 인식하도록 돕는다. 그러나 이 과정은 여전히 매우 수동적이고 업무 집약적이며 관찰 누락에 취약하다.",
+      "methods": "영국의 한 돌봄 시설에서 참여적 설계 워크숍을 실시하여 사회적 보조 로봇(SARs)과 보조 생활 기술(ALTs)이 'Stop and Watch' 도구를 의미 있게 지원할 수 있는 방법을 탐구했다. 모든 관련 이해관계자의 우선순위와 우려를 파악했다.",
+      "results": "현재 관행에 대한 포괄적 이해를 구축하고 이해관계자들의 우선순위와 우려사항을 파악했다. AI 기반 시스템이 'Stop and Watch' 도구를 지원하고 향상시킬 수 있는 유망한 방법들을 확인했다.",
+      "conclusion": "AI 기반 시스템 설계에는 현재 관행에 대한 포괄적 이해와 모든 관련 이해관계자의 참여가 필요한 다학제적 노력이 필요하다. 참여적 접근법이 효과적인 지원 시스템 개발에 핵심이다.",
+      "connection": "This exemplifies human-AI partnership in community care services, showing how participatory design can inform AI systems that support vulnerable populations."
+    },
+    {
+      "number": 6,
+      "title": "A Proposed Participatory Framework for Explainable AI in mHealth: Mixed Methods Study Integrating User and Stakeholder Requirements",
+      "authors": "BSc MSc Farzana Islam, BSc MS PhD M Ashraful Islam, BSc MSc PhD Ashraful Amin, BSc Moinul Zaber",
+      "url": "https://www.semanticscholar.org/paper/069421c64700795af0a3ffce66669c5cc8f87eeb",
+      "venue": "Journal of Medical Internet Research",
+      "date": "2026-05-04",
+      "relevance": 7,
+      "category": "public_benefits_tech",
+      "background": "모바일 헬스(mHealth) 앱에서 AI 통합은 저자원 환경에서 의료 접근 기회를 제공하지만, 불투명한 AI 권장사항은 신뢰와 채택을 약화시킨다. 서구 맥락에서 설계된 기존 설명 가능한 AI(XAI) 프레임워크는 남아시아 인구의 언어적, 문화적, 인프라적 현실을 다루지 못한다.",
+      "methods": "방글라데시에서 AI 기반 mHealth에 대한 이해관계자 인식과 신뢰 및 설명 가능성에 대한 혼합 방법 연구를 실시했다. 인구통계학적 신뢰 예측 변수를 파악하고 맥락에 적응된 프레임워크를 개발했다.",
+      "results": "남아시아 맥락에서 AI 기반 mHealth 시스템의 신뢰와 설명 가능성 요구사항을 파악했다. 개발자, 정책 입안자, 임상의에게 도움이 되는 맥락 적응 프레임워크를 개발했다.",
+      "conclusion": "교육받고 디지털에 정통한 인구 사이의 설명 가능성 요구사항을 이해하는 것이 포용적인 mHealth 기술의 미래 발전을 위한 기초적 통찰을 제공한다. 문화적으로 적응된 XAI 프레임워크가 필요하다.",
+      "connection": "This addresses trust and explainability in AI systems serving vulnerable populations, relevant to public benefits navigation and algorithmic care dynamics."
+    },
+    {
+      "number": 7,
+      "title": "Improvisational Participatory Storming: A Toolkit of Improvisational Design Methods for Human-Robot Interaction",
+      "authors": "Kathy Assaf, Sawyer Collins, Kevin Rich, James Walker, Nicholle Harris, Tom Williams",
+      "url": "https://www.semanticscholar.org/paper/e365d3246af677a224899d9036616c3ab7076713",
+      "venue": "IEEE/ACM International Conference on Human-Robot Interaction",
+      "date": "2026-03-16",
+      "relevance": 6,
+      "category": "participatory_design",
+      "background": "연극 기반 설계 방법이 로봇 상호작용 설계에서 매우 효과적인 것으로 인정받고 있다. 그러나 취약 계층과 작업할 때처럼 설계자가 이해관계자 역할을 하는 것이 부적절하거나 비효과적인 경우가 많다. 이러한 상황에서는 참여적 방법을 사용해야 한다.",
+      "methods": "HRI, 연극, 드라마 치료, 응용 즉흥 연기 분야의 학자들과 실무자들을 결합하여 이 과제를 해결했다. 커뮤니티 구성원이 연극 기반 설계 방법에 효과적으로 참여할 수 있는 방법을 탐구했다.",
+      "results": "Human-Robot Interaction에 특별히 적합한 새로운 연극 기반 참여적 설계 방법인 즉흥 참여적 스토밍(IPS)을 개발했다. IPS 워크숍을 위한 구체적인 3섹션 구조를 확인했다.",
+      "conclusion": "IPS는 취약 계층과의 작업에서 특히 유용한 새로운 참여적 설계 방법론을 제공한다. 연극 기반 방법과 참여적 설계의 효과적 결합이 가능하다.",
+      "connection": "This provides methodological tools for participatory design with vulnerable populations, directly supporting community engagement approaches in AI system design."
+    }
+  ]
 }
