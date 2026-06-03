@@ -5,6 +5,7 @@ url: "https://www.semanticscholar.org/paper/bcf24ea25b964173db14baf4831fff1be33b
 venue: "HRI Companion"
 relevance: 8
 date: 2026-05-27
+category: human_ai_collab
 tags: [paper, human_ai_collab]
 status: unread
 ---

@@ -5,6 +5,7 @@ url: "https://www.semanticscholar.org/paper/e365d3246af677a224899d9036616c3ab707
 venue: "HRI"
 relevance: 8
 date: 2026-05-27
+category: participatory_design
 tags: [paper, participatory_design]
 status: unread
 ---

@@ -95,9 +95,13 @@ url: "https://..."
 venue: "CHI"
 relevance: 9
 date: YYYY-MM-DD
+category: 카테고리
 tags: [paper, 카테고리]
 status: unread
 ---
+
+> `category`는 독립 속성으로 반드시 포함 (Obsidian Bases `papers.base` 그룹핑에 사용).
+> 값은 Step 2 카테고리 enum 중 하나: human_ai_collab | public_benefits_tech | low_income_populations | participatory_design | algorithmic_fairness | llm_applications | ai_general
 
 # 논문 제목
 

@@ -1,0 +1,71 @@
+filters:
+  and:
+    - file.hasTag("paper")
+properties:
+  file.name:
+    displayName: 제목
+  note.relevance:
+    displayName: 관련성
+  note.category:
+    displayName: 카테고리
+  note.venue:
+    displayName: 학회
+  note.date:
+    displayName: 발표일
+  note.status:
+    displayName: 상태
+views:
+  - type: table
+    name: 카테고리별
+    order:
+      - file.name
+      - relevance
+      - venue
+      - date
+      - status
+    sort:
+      - property: relevance
+        direction: DESC
+    groupBy:
+      property: category
+      direction: ASC
+    limit: 200
+  - type: table
+    name: 관련성순
+    order:
+      - file.name
+      - relevance
+      - category
+      - venue
+      - date
+    sort:
+      - property: relevance
+        direction: DESC
+    limit: 200
+  - type: table
+    name: 안 읽음
+    filters:
+      and:
+        - 'status != "read"'
+    order:
+      - file.name
+      - relevance
+      - category
+      - venue
+    sort:
+      - property: relevance
+        direction: DESC
+    groupBy:
+      property: category
+      direction: ASC
+    limit: 200
+  - type: cards
+    name: 카드
+    order:
+      - file.name
+      - relevance
+      - venue
+    sort:
+      - property: relevance
+        direction: DESC
+    limit: 200

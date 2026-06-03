@@ -5,6 +5,7 @@ url: "https://arxiv.org/abs/2604.22765"
 venue: "Social Science Research Network"
 relevance: 7
 date: 2026-03-24
+category: algorithmic_fairness
 tags: [paper, algorithmic_fairness]
 status: unread
 ---

@@ -5,6 +5,7 @@ url: "https://www.semanticscholar.org/paper/a7a9ed55671483e132cdd9a958fdf6ba6bbe
 venue: "International Conference on Human Factors in Computing Systems"
 relevance: 9
 date: 2025-04-25
+category: participatory_design
 tags: [paper, participatory_design]
 status: unread
 ---

@@ -5,6 +5,7 @@ url: "https://www.semanticscholar.org/paper/cf6f8e9dfffbb20fe2f431900270c3b26b1d
 venue: "AI and Ethics"
 relevance: 8
 date: 2026-05-27
+category: participatory_design
 tags: [paper, participatory_design]
 status: unread
 ---

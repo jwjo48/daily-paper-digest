@@ -5,6 +5,7 @@ url: "https://www.semanticscholar.org/paper/a7a9ed55671483e132cdd9a958fdf6ba6bbe
 venue: "CHI"
 relevance: 9
 date: 2026-05-27
+category: participatory_design
 tags: [paper, participatory_design]
 status: unread
 ---

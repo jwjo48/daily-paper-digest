@@ -5,6 +5,7 @@ url: "https://www.semanticscholar.org/paper/1053390818795d37287dba97679356d1052e
 venue: "2025 7th International Conference on Information Systems and Computer Networks (ISCON)"
 relevance: 8
 date: 2025-09-05
+category: algorithmic_fairness
 tags: [paper, algorithmic_fairness]
 status: unread
 ---

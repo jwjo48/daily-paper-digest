@@ -5,6 +5,7 @@ url: "https://www.semanticscholar.org/paper/d6440f52d09aa92be43824bfce1ecb848a11
 venue: "JMIR Formative Research"
 relevance: 6
 date: 2025-03-26
+category: human_ai_collab
 tags: [paper, human_ai_collab]
 status: unread
 ---

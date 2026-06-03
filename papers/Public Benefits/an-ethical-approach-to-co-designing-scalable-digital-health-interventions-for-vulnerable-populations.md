@@ -5,6 +5,7 @@ url: "https://www.semanticscholar.org/paper/b71cb06e274e7e51b8ad711e9adcbb7ce2c1
 venue: "BIOSTEC"
 relevance: 8
 date: 2026-05-27
+category: public_benefits_tech
 tags: [paper, public_benefits_tech]
 status: unread
 ---

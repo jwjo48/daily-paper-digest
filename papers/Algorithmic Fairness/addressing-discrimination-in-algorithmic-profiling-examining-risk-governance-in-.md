@@ -5,6 +5,7 @@ url: "https://www.semanticscholar.org/paper/bbf1b122bb8318c9baab104088874e1559a1
 venue: "European Journal of Social Security"
 relevance: 9
 date: 2025-06-01
+category: algorithmic_fairness
 tags: [paper, algorithmic_fairness]
 status: unread
 ---
