@@ -106,6 +106,10 @@ def _format_picker(folders: dict, has_recs: bool = False) -> str:
     lines.append("• 2 → N:Benefits Navigation")
     lines.append("• 1,3 → A, 2 → N:새폴더")
     lines.append("")
+    lines.append("🧠 생각 남기기 (태그 자동 생성):")
+    lines.append("• 1 → A | 신뢰 보정에 유용")
+    lines.append("• (ok 저장 후) 다음 줄에  1: 생각…")
+    lines.append("")
     lines.append("저장 안 함: skip 또는 0")
     return "\n".join(lines)
 

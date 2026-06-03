@@ -123,43 +123,100 @@ def recommended_assignments(papers: list[dict]):
     return out
 
 
-def parse_reply(text: str, folder_map: dict[str, str], num_papers: int):
-    """Returns (assignments, error). assignments is list of (paper_num, folder_name)."""
-    text = text.strip().replace("⇒", "→").replace("➔", "→")
+# "N: 생각" — 화살표 없는 줄은 N번 논문에 대한 thoughts
+_THOUGHT_LINE_RE = re.compile(r"^\s*(\d+)\s*[:：]\s*(\S.*?)\s*$")
 
-    if text.lower() in ("skip", "0", "pass", "패스", "건너뛰기"):
-        return [], None  # explicit skip
 
-    matches = list(_GROUP_RE.finditer(text))
-    if not matches:
-        return None, "형식을 인식하지 못했습니다."
+def parse_reply(text: str, folder_map: dict[str, str], num_papers: int,
+                papers: list[dict] | None = None):
+    """Returns (assignments, thoughts, error).
 
+    assignments: list of (paper_num, folder_name)
+    thoughts:    dict {paper_num: thought_text}
+
+    지원 형식:
+      1,3 → A                      (기존)
+      2 → N:새폴더                 (기존)
+      1 → A | 신뢰 보정에 유용     (인라인 thoughts, 한 줄 한 논문)
+      ok                           (추천대로 저장)
+      1: 이 논문은 ...             (N번 논문 thoughts만 추가)
+    """
+    papers = papers or []
+    text = text.replace("⇒", "→").replace("➔", "→").replace("=>", "→").replace("->", "→")
+
+    thoughts: dict[int, str] = {}
+    body_lines: list[str] = []
+
+    # 1) "N: 생각" 형태(화살표 없음)는 thoughts로 분리
+    for line in text.splitlines():
+        if "→" not in line and ">" not in line:
+            m = _THOUGHT_LINE_RE.match(line)
+            if m:
+                n = int(m.group(1))
+                if 1 <= n <= num_papers:
+                    thoughts[n] = m.group(2).strip()
+                    continue
+        body_lines.append(line)
+
+    body = "\n".join(body_lines).strip()
+
+    if body.lower() in ("skip", "0", "pass", "패스", "건너뛰기"):
+        return [], {}, None  # explicit skip (thoughts 무시)
+
+    # 2) "ok / ㅇㅇ / 추천대로" → 추천 테마 그대로
+    if body.lower() in _ACCEPT_KEYWORDS:
+        assignments = recommended_assignments(papers)
+        if not assignments:
+            return None, thoughts, "추천 테마 정보가 없어 자동 저장할 수 없어요."
+        return assignments, thoughts, None
+
+    if not body and thoughts:
+        # thoughts만 보냈는데 저장 대상이 없음
+        return None, thoughts, "어느 폴더에 저장할지 함께 알려주세요. 예: 1 → A | 생각"
+
+    # 3) 배정 줄 파싱 (줄마다 처리, 줄 끝 '| 생각'은 그 논문 thoughts)
     assignments: list[tuple[int, str]] = []
-    for m in matches:
-        nums_str, dest = m.group(1), m.group(2).strip()
-
-        if dest.upper().startswith("N"):
-            # N:폴더이름
-            folder = dest.split(":", 1)[1].strip() if ":" in dest else ""
-            if not folder:
-                return None, "새 폴더 이름이 비어있습니다. (예: N:폴더이름)"
+    for seg in body.splitlines():
+        if not seg.strip():
+            continue
+        seg_thought = None
+        if "|" in seg:
+            left, seg_thought = seg.split("|", 1)
+            seg_thought = seg_thought.strip() or None
         else:
-            letter = dest.upper()
-            folder = folder_map.get(letter)
-            if not folder:
-                return None, f"폴더 '{letter}'는 목록에 없습니다."
+            left = seg
 
-        try:
-            nums = [int(n.strip()) for n in nums_str.split(",")]
-        except ValueError:
-            return None, f"논문 번호를 인식하지 못했습니다: {nums_str!r}"
+        matches = list(_GROUP_RE.finditer(left))
+        if not matches:
+            return None, thoughts, f"형식을 인식하지 못했습니다: {seg.strip()!r}"
 
-        for n in nums:
-            if not (1 <= n <= num_papers):
-                return None, f"논문 번호 {n}은 1~{num_papers} 범위가 아닙니다."
-            assignments.append((n, folder))
+        for m in matches:
+            nums_str, dest = m.group(1), m.group(2).strip()
+            if dest.upper().startswith("N"):
+                folder = dest.split(":", 1)[1].strip() if ":" in dest else ""
+                if not folder:
+                    return None, thoughts, "새 폴더 이름이 비어있습니다. (예: N:폴더이름)"
+            else:
+                folder = folder_map.get(dest.upper())
+                if not folder:
+                    return None, thoughts, f"폴더 '{dest.upper()}'는 목록에 없습니다."
 
-    return assignments, None
+            try:
+                nums = [int(n.strip()) for n in nums_str.split(",")]
+            except ValueError:
+                return None, thoughts, f"논문 번호를 인식하지 못했습니다: {nums_str!r}"
+
+            for n in nums:
+                if not (1 <= n <= num_papers):
+                    return None, thoughts, f"논문 번호 {n}은 1~{num_papers} 범위가 아닙니다."
+                assignments.append((n, folder))
+                if seg_thought:
+                    thoughts[n] = seg_thought
+
+    if not assignments:
+        return None, thoughts, "형식을 인식하지 못했습니다."
+
+    return assignments, thoughts, None
 
 
 # ─── Markdown writer ─────────────────────────────────────────────────────────
@@ -171,22 +228,36 @@ def _slugify(text: str) -> str:
     return text.strip("-")[:80]
 
 
-def write_paper_md(paper: dict, folder: str) -> Path:
+def _yaml_escape(text: str) -> str:
+    """YAML 더블쿼트 문자열용 이스케이프."""
+    return text.replace("\\", "\\\\").replace('"', '\\"')
+
+
+def write_paper_md(paper: dict, folder: str, thought: str = "") -> Path:
     folder_dir = PAPERS_DIR / folder
     folder_dir.mkdir(parents=True, exist_ok=True)
 
     title = paper.get("title", "Untitled")
     file_path = folder_dir / f"{_slugify(title)}.md"
 
+    thought = (thought or "").strip()
+    # frontmatter 의 따옴표 문자열은 모두 이스케이프 (제목 등에 " 포함 시 YAML 깨짐 방지)
+    title_y = _yaml_escape(title)
+    authors_y = _yaml_escape(paper.get("authors", ""))
+    url_y = _yaml_escape(paper.get("url", ""))
+    venue_y = _yaml_escape(paper.get("venue", ""))
+    # thought_tags 는 비워둠 → enrich-thought-tags 워크플로우(Claude)가 채움
     md = f"""---
-title: "{title}"
-authors: "{paper.get('authors', '')}"
-url: "{paper.get('url', '')}"
-venue: "{paper.get('venue', '')}"
+title: "{title_y}"
+authors: "{authors_y}"
+url: "{url_y}"
+venue: "{venue_y}"
 relevance: {paper.get('relevance', '?')}
 date: {paper.get('date', datetime.now().strftime('%Y-%m-%d'))}
 category: {paper.get('category', 'ai_general')}
 tags: [paper, {paper.get('category', 'ai_general')}]
+thoughts: "{_yaml_escape(thought)}"
+thought_tags: []
 status: unread
 ---
 
@@ -210,6 +281,9 @@ status: unread
 
 ## 🔗 연구 연관성
 {paper.get('connection', '')}
+
+## 🧠 내 생각
+{thought}
 
 ---
 ## 메모
@@ -279,19 +353,9 @@ def main() -> None:
         folder_map = digest.get("folders", {})
         papers = digest["papers"]
 
-        # "ok / ㅇㅇ / 추천대로" → 논문별 추천 테마 그대로 저장
-        if text.strip().lower() in _ACCEPT_KEYWORDS:
-            assignments = recommended_assignments(papers)
-            if not assignments:
-                send(
-                    "⚠️ 추천 테마 정보가 없어 자동 저장할 수 없어요.\n"
-                    "직접 지정해 주세요. 예: 1,3 → A",
-                    reply_to=msg_id,
-                )
-                continue
-            err = None
-        else:
-            assignments, err = parse_reply(text, folder_map, len(papers))
+        assignments, thoughts, err = parse_reply(
+            text, folder_map, len(papers), papers
+        )
 
         if err:
             send(
@@ -299,7 +363,8 @@ def main() -> None:
                 f"형식 예시:\n"
                 f"• 1,3 → A\n"
                 f"• 2 → N:Benefits Navigation\n"
-                f"• 1,3 → A, 2 → N:새폴더\n"
+                f"• 1 → A | 내 생각 한 줄\n"
+                f"• ok  (추천대로 저장)\n"
                 f"• skip (저장 안 함)",
                 reply_to=msg_id,
             )
@@ -311,16 +376,24 @@ def main() -> None:
 
         # Save
         lines = []
+        n_thoughts = 0
         for n, folder in assignments:
             paper = papers[n - 1]
-            path = write_paper_md(paper, folder)
+            thought = thoughts.get(n, "")
+            if thought:
+                n_thoughts += 1
+            path = write_paper_md(paper, folder, thought)
             saved_files.append(path)
             folder_summary[folder] += 1
             title = paper.get("title", "")[:60]
-            lines.append(f"  • [{paper.get('relevance','?')}/10] {title} → {folder}")
+            mark = " 📝" if thought else ""
+            lines.append(f"  • [{paper.get('relevance','?')}/10] {title} → {folder}{mark}")
 
+        footer = ""
+        if n_thoughts:
+            footer = f"\n\n🧠 생각 {n_thoughts}개 저장됨 — 태그는 곧 자동 생성됩니다."
         send(
-            f"✅ {len(assignments)}편 저장 완료:\n" + "\n".join(lines),
+            f"✅ {len(assignments)}편 저장 완료:\n" + "\n".join(lines) + footer,
             reply_to=msg_id,
         )
 

@@ -89,6 +89,15 @@ Notre Dame 대학교 HCI 포스닥 연구자:
 - 사용자가 **`ok` / `ㅇㅇ` / `추천대로`** 라고 답하면 → 각 논문을 Step 3에서 **추천한 테마**(기존 폴더 또는 제안한 새 폴더)에 그대로 저장.
 - 사용자가 직접 지정하면 (예: `1,3 → A, 2 → N:Benefits Navigation`) → 지정대로 저장.
 
+### 사용자 thoughts → 태그 자동 생성
+
+사용자가 논문에 대한 **생각(thoughts)**을 함께 남기면 (예: `1 → A | 신뢰 보정에 유용`, 또는 `1: 이건 COMPASS에 적용 가능` 같은 별도 줄):
+
+1. 그 생각을 노트 frontmatter `thoughts:` 와 본문 `## 🧠 내 생각` 에 **그대로 저장**.
+2. 그 생각 + 논문 내용을 바탕으로 **태그 2~5개를 직접 생성**한다 (소문자, 하이픈, 한/영 가능. 예: trust-calibration, eu-ai-act, 취약계층).
+3. 생성한 태그를 `thought_tags:` 에 넣고, 같은 태그를 `tags:` 목록에도 병합(중복 제거).
+4. 생각이 없는 논문은 `thoughts: ""`, `thought_tags: []` 로 저장 (Telegram 경로에서 나중에 enrich-thought-tags 워크플로우가 채움).
+
 저장 절차:
 
 1. 선택된 논문별로 마크다운 파일 생성
@@ -109,12 +118,15 @@ venue: "CHI"
 relevance: 9
 date: YYYY-MM-DD
 category: 카테고리
-tags: [paper, 카테고리]
+tags: [paper, 카테고리, 생성태그1, 생성태그2]
+thoughts: "사용자가 남긴 생각 (없으면 빈 문자열)"
+thought_tags: [생성태그1, 생성태그2]
 status: unread
 ---
 
 > `category`는 독립 속성으로 반드시 포함 (Obsidian Bases `papers.base` 그룹핑에 사용).
 > 값은 Step 2 카테고리 enum 중 하나: human_ai_collab | public_benefits_tech | low_income_populations | participatory_design | algorithmic_fairness | llm_applications | ai_general
+> `thoughts`/`thought_tags`는 Step 4의 "thoughts → 태그" 규칙대로 채움 (생각 없으면 `""` / `[]`).
 
 # 논문 제목
 
@@ -136,6 +148,9 @@ status: unread
 
 ## 🔗 연구 연관성
 영어 연관성 설명
+
+## 🧠 내 생각
+사용자가 남긴 생각 (없으면 비움)
 
 ---
 ## 메모

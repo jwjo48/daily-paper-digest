@@ -1,0 +1,77 @@
+# =============================================================
+# Enrich Thought Tags — 사용자 thoughts 기반 태그 자동 생성
+# Telegram로 남긴 "내 생각"이 달린 노트를 Claude가 훑어 태그 생성.
+# API 미사용 (Max 플랜 OAuth 토큰).
+# =============================================================
+
+name: Enrich Thought Tags
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'   # 3시간마다 (아침 digest 이후 thoughts 반영)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: enrich-thought-tags
+  cancel-in-progress: false
+
+jobs:
+  enrich:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Generate tags from thoughts (Claude, Max plan)
+        uses: anthropics/claude-code-action@beta
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          mode: 'agent'
+          allowed_tools: "Bash,Read,Write,Edit,Glob,Grep"
+          direct_prompt: |
+            태그 보강 작업. papers/ 안의 마크다운 노트 중 사용자가 남긴 생각이 있지만 아직 태그가 안 만들어진 것만 처리한다.
+
+            ⚠️ git 커밋 하지 말 것 (다음 워크플로우 step이 함)
+            ⚠️ thoughts / 본문 / 다른 frontmatter는 절대 수정하지 말 것
+
+            절차:
+
+            1. papers/**/*.md 중 frontmatter가 다음을 모두 만족하는 파일을 찾는다:
+               - `thoughts:` 값이 비어있지 않음 (빈 문자열 "" 아님)
+               - `thought_tags:` 가 빈 배열([]) 이거나 없음
+
+            2. 각 해당 노트에 대해:
+               - 사용자의 `thoughts` + 논문 title/category/요약을 읽는다.
+               - 사용자의 생각이 담은 핵심 개념을 나타내는 태그 2~5개를 만든다.
+                 (소문자, 공백 대신 하이픈, 한국어/영어 가능. 예: trust-calibration, eu-ai-act, 취약계층)
+               - `thought_tags:` 를 그 태그 목록(YAML 인라인 배열)으로 채운다.
+               - 같은 태그들을 기존 `tags:` 목록에도 병합한다 (중복 제거, 기존 값 유지).
+               - 그 외 내용은 한 글자도 바꾸지 않는다.
+
+            3. 해당 노트가 없으면 아무것도 하지 말고 "no notes to enrich" 출력.
+
+            4. 보강한 노트마다 한 줄 요약 출력: "<파일경로> → [tag1, tag2, ...]".
+
+      - name: Commit enriched tags
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add papers/
+          if git diff --cached --quiet; then
+            echo "보강할 노트 없음 — 커밋 생략"
+            exit 0
+          fi
+          N=$(git diff --cached --name-only | wc -l | tr -d ' ')
+          DATE=$(date -u +%Y-%m-%d)
+          git commit -m "tags: enrich ${N} note(s) from user thoughts (${DATE})"
+          git push

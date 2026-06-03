@@ -14,14 +14,19 @@ properties:
     displayName: 발표일
   note.status:
     displayName: 상태
+  note.thoughts:
+    displayName: 내 생각
+  note.thought_tags:
+    displayName: 생각 태그
 views:
   - type: table
     name: 카테고리별
     order:
       - file.name
       - relevance
+      - thought_tags
+      - thoughts
       - venue
-      - date
       - status
     sort:
       - property: relevance
@@ -29,6 +34,21 @@ views:
     groupBy:
       property: category
       direction: ASC
+    limit: 200
+  - type: table
+    name: 내 생각
+    filters:
+      and:
+        - 'thoughts != ""'
+    order:
+      - file.name
+      - relevance
+      - thoughts
+      - thought_tags
+      - category
+    sort:
+      - property: relevance
+        direction: DESC
     limit: 200
   - type: table
     name: 관련성순
