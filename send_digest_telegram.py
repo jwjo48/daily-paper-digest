@@ -45,7 +45,7 @@ def _send(text: str) -> bool:
         return False
 
 
-def _format_paper(p: dict) -> str:
+def _format_paper(p: dict, folders: dict | None = None) -> str:
     num = p.get("number", "?")
     rel = p.get("relevance", "?")
     title = p.get("title", "")
@@ -67,19 +67,41 @@ def _format_paper(p: dict) -> str:
     if p.get("connection"):
         lines.append("")
         lines.append(f"🔗 {p['connection']}")
+    rec = _format_recommendation(p, folders or {})
+    if rec:
+        lines.append("")
+        lines.append(rec)
     if url:
         lines.append(f"📎 {url}")
     return "\n".join(lines)
 
 
-def _format_picker(folders: dict) -> str:
+def _format_recommendation(p: dict, folders: dict) -> str:
+    """논문별 테마 추천 한 줄. rec_folder(기존) 또는 rec_new(새 폴더 제안)."""
+    reason = p.get("rec_reason", "")
+    suffix = f" — {reason}" if reason else ""
+    rec_folder = p.get("rec_folder")
+    rec_new = p.get("rec_new")
+    if rec_folder:
+        letter = next((k for k, v in folders.items() if v == rec_folder), None)
+        label = f"{letter}) {rec_folder}" if letter else rec_folder
+        return f"💡 추천 테마: {label}{suffix}"
+    if rec_new:
+        return f"💡 추천 테마: 🆕 새 폴더 '{rec_new}'{suffix}"
+    return ""
+
+
+def _format_picker(folders: dict, has_recs: bool = False) -> str:
     lines = ["📂 저장할 폴더 선택", ""]
     for letter in sorted(folders.keys()):
         lines.append(f"{letter}) {folders[letter]}")
     lines.append("")
     lines.append("(N으로 시작하면 새 폴더 생성)")
     lines.append("")
-    lines.append("답장 형식:")
+    if has_recs:
+        lines.append("✅ 추천대로 전부 저장:  ok  (또는 y / ㅇㅇ)")
+        lines.append("")
+    lines.append("직접 지정 형식:")
     lines.append("• 1,3 → A")
     lines.append("• 2 → N:Benefits Navigation")
     lines.append("• 1,3 → A, 2 → N:새폴더")
@@ -121,11 +143,12 @@ def main() -> int:
         failures += 1
 
     for p in papers:
-        if not _send(_format_paper(p)):
+        if not _send(_format_paper(p, folders)):
             failures += 1
 
     if folders:
-        if not _send(_format_picker(folders)):
+        has_recs = any(p.get("rec_folder") or p.get("rec_new") for p in papers)
+        if not _send(_format_picker(folders, has_recs)):
             failures += 1
 
     if failures:

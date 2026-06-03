@@ -64,7 +64,14 @@ jobs:
 
             4. List subdirectories of `papers/` alphabetically (use `ls papers/`), assign letters A, B, C, ... to each.
 
-            5. Write `staging/digest.json` with this exact structure:
+            5. For EACH paper, recommend a theme folder:
+               - If an existing folder (from step 4) is a strong thematic fit, set "rec_folder" to that exact folder NAME (not the letter) and set "rec_new" to null.
+               - If NO existing folder fits well, propose a concise new theme name in "rec_new" (English, Title Case, consistent with existing folder style e.g. "AI Governance") and set "rec_folder" to null.
+               - Always set exactly ONE of rec_folder / rec_new (the other null).
+               - Add "rec_reason": a short Korean phrase (≤1 line) explaining the fit.
+               - Prefer reusing an existing folder; only suggest a new one when the topic is genuinely distinct.
+
+            6. Write `staging/digest.json` with this exact structure:
                {
                  "date": "YYYY-MM-DD",
                  "folders": {"A": "<folder name>", "B": "...", ...},
@@ -74,15 +81,17 @@ jobs:
                      "title": "...", "authors": "...", "url": "...", "venue": "...", "date": "...",
                      "relevance": 9, "category": "human_ai_collab",
                      "background": "...", "methods": "...", "results": "...", "conclusion": "...",
-                     "connection": "..."
+                     "connection": "...",
+                     "rec_folder": "Human-AI Collaboration", "rec_new": null,
+                     "rec_reason": "커뮤니티 사회서비스 Human-AI 협업과 직접 연결"
                    },
                    ...
                  ]
                }
 
-            6. If NO papers met the threshold, write `staging/digest.json` with an empty papers array but still include date + folders.
+            7. If NO papers met the threshold, write `staging/digest.json` with an empty papers array but still include date + folders.
 
-            7. Print a short summary to stdout: "Wrote N papers to staging/digest.json".
+            8. Print a short summary to stdout: "Wrote N papers to staging/digest.json".
 
             That's it. No Telegram, no git, no papers/ writes. Just digest.json.
 

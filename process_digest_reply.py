@@ -106,6 +106,23 @@ _GROUP_RE = re.compile(
 )
 
 
+# "추천대로 전부 저장" 단축어
+_ACCEPT_KEYWORDS = {
+    "ok", "okay", "o", "y", "yes", "ㅇ", "ㅇㅇ", "ㅇㅋ", "응", "넵", "네",
+    "추천", "추천대로", "recommend", "all", "전부", "다", "go",
+}
+
+
+def recommended_assignments(papers: list[dict]):
+    """각 논문의 rec_folder(기존) 또는 rec_new(새 폴더)로 배정 목록 생성."""
+    out: list[tuple[int, str]] = []
+    for i, p in enumerate(papers, 1):
+        folder = (p.get("rec_folder") or p.get("rec_new") or "").strip()
+        if folder:
+            out.append((i, folder))
+    return out
+
+
 def parse_reply(text: str, folder_map: dict[str, str], num_papers: int):
     """Returns (assignments, error). assignments is list of (paper_num, folder_name)."""
     text = text.strip().replace("⇒", "→").replace("➔", "→")
@@ -168,6 +185,7 @@ url: "{paper.get('url', '')}"
 venue: "{paper.get('venue', '')}"
 relevance: {paper.get('relevance', '?')}
 date: {paper.get('date', datetime.now().strftime('%Y-%m-%d'))}
+category: {paper.get('category', 'ai_general')}
 tags: [paper, {paper.get('category', 'ai_general')}]
 status: unread
 ---
@@ -260,7 +278,20 @@ def main() -> None:
 
         folder_map = digest.get("folders", {})
         papers = digest["papers"]
-        assignments, err = parse_reply(text, folder_map, len(papers))
+
+        # "ok / ㅇㅇ / 추천대로" → 논문별 추천 테마 그대로 저장
+        if text.strip().lower() in _ACCEPT_KEYWORDS:
+            assignments = recommended_assignments(papers)
+            if not assignments:
+                send(
+                    "⚠️ 추천 테마 정보가 없어 자동 저장할 수 없어요.\n"
+                    "직접 지정해 주세요. 예: 1,3 → A",
+                    reply_to=msg_id,
+                )
+                continue
+            err = None
+        else:
+            assignments, err = parse_reply(text, folder_map, len(papers))
 
         if err:
             send(
