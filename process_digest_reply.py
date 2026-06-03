@@ -246,6 +246,14 @@ def write_paper_md(paper: dict, folder: str, thought: str = "") -> Path:
     authors_y = _yaml_escape(paper.get("authors", ""))
     url_y = _yaml_escape(paper.get("url", ""))
     venue_y = _yaml_escape(paper.get("venue", ""))
+    category = paper.get("category", "ai_general")
+    # tags = paper + category + 연관성 기반 auto_tags (중복 제거, 순서 유지)
+    tags: list[str] = ["paper", category]
+    for t in paper.get("auto_tags", []) or []:
+        t = str(t).strip()
+        if t and t not in tags:
+            tags.append(t)
+    tags_str = ", ".join(tags)
     # thought_tags 는 비워둠 → enrich-thought-tags 워크플로우(Claude)가 채움
     md = f"""---
 title: "{title_y}"
@@ -254,8 +262,8 @@ url: "{url_y}"
 venue: "{venue_y}"
 relevance: {paper.get('relevance', '?')}
 date: {paper.get('date', datetime.now().strftime('%Y-%m-%d'))}
-category: {paper.get('category', 'ai_general')}
-tags: [paper, {paper.get('category', 'ai_general')}]
+category: {category}
+tags: [{tags_str}]
 thoughts: "{_yaml_escape(thought)}"
 thought_tags: []
 status: unread

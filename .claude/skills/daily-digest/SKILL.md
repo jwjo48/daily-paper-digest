@@ -89,14 +89,17 @@ Notre Dame 대학교 HCI 포스닥 연구자:
 - 사용자가 **`ok` / `ㅇㅇ` / `추천대로`** 라고 답하면 → 각 논문을 Step 3에서 **추천한 테마**(기존 폴더 또는 제안한 새 폴더)에 그대로 저장.
 - 사용자가 직접 지정하면 (예: `1,3 → A, 2 → N:Benefits Navigation`) → 지정대로 저장.
 
-### 사용자 thoughts → 태그 자동 생성
+### 태그 생성 규칙 (중요)
 
-사용자가 논문에 대한 **생각(thoughts)**을 함께 남기면 (예: `1 → A | 신뢰 보정에 유용`, 또는 `1: 이건 COMPASS에 적용 가능` 같은 별도 줄):
+**모든 논문**에 대해, Claude가 생성한 🔗 연구 연관성("How it relates to my study") 텍스트 + 논문 내용을 기반으로 **주제 태그 3~6개를 생성**한다.
+- 소문자, 공백 대신 하이픈, 한/영 가능. 예: `trust-calibration`, `eu-ai-act`, `public-benefits`, `취약계층`, `participatory-design`.
+- **하나로 제한하지 말 것** — 연관성의 핵심 개념을 여러 각도로 담는다.
+- 이 태그들을 `tags:` 목록에 병합한다 (`paper`, `<category>` 와 함께, 중복 제거).
 
-1. 그 생각을 노트 frontmatter `thoughts:` 와 본문 `## 🧠 내 생각` 에 **그대로 저장**.
-2. 그 생각 + 논문 내용을 바탕으로 **태그 2~5개를 직접 생성**한다 (소문자, 하이픈, 한/영 가능. 예: trust-calibration, eu-ai-act, 취약계층).
-3. 생성한 태그를 `thought_tags:` 에 넣고, 같은 태그를 `tags:` 목록에도 병합(중복 제거).
-4. 생각이 없는 논문은 `thoughts: ""`, `thought_tags: []` 로 저장 (Telegram 경로에서 나중에 enrich-thought-tags 워크플로우가 채움).
+추가로 사용자가 **생각(thoughts)**을 남기면 (예: `1 → A | 신뢰 보정에 유용`, 또는 `1: COMPASS에 적용 가능` 별도 줄):
+1. 생각을 frontmatter `thoughts:` 와 본문 `## 🧠 내 생각` 에 **그대로 저장**.
+2. 생각 기반 태그를 추가로 생성해 `thought_tags:` 에 넣고 `tags:` 에도 병합.
+3. 생각이 없으면 `thoughts: ""`, `thought_tags: []` (Telegram 경로는 나중에 enrich-thought-tags 워크플로우가 채움).
 
 저장 절차:
 

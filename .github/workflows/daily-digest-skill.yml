@@ -56,7 +56,8 @@ jobs:
             2. Read staging/latest.json. For each paper, evaluate:
                - relevance (1-10 integer)
                - 4-section Korean summary: background, methods, results, conclusion (1-2 sentences each)
-               - connection: 1-sentence English research connection
+               - connection: 1-sentence English research connection ("how it relates to my study")
+               - auto_tags: 3-6 topical tags DERIVED FROM the `connection` text + paper content (lowercase, hyphenated, Korean/English ok, e.g. trust-calibration, public-benefits, 취약계층). Do NOT limit to one. These capture the key concepts of how the paper relates to the research.
                - category: one of human_ai_collab | public_benefits_tech | low_income_populations | participatory_design | algorithmic_fairness | llm_applications | ai_general
                Use the researcher context from `.claude/skills/daily-digest/SKILL.md`.
 
@@ -82,6 +83,7 @@ jobs:
                      "relevance": 9, "category": "human_ai_collab",
                      "background": "...", "methods": "...", "results": "...", "conclusion": "...",
                      "connection": "...",
+                     "auto_tags": ["trust-calibration", "public-benefits", "취약계층"],
                      "rec_folder": "Human-AI Collaboration", "rec_new": null,
                      "rec_reason": "커뮤니티 사회서비스 Human-AI 협업과 직접 연결"
                    },
