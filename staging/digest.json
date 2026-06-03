@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-02",
+  "date": "2026-06-03",
   "folders": {
     "A": "AI General",
     "B": "Algorithmic Fairness", 
@@ -8,96 +8,5 @@
     "E": "Participatory Design",
     "F": "Public Benefits"
   },
-  "papers": [
-    {
-      "number": 1,
-      "title": "A Scenario-Based Design Pack for Exploring Multimodal Human–GenAI Relations",
-      "authors": "J. Andres, Chris Danta, Andrea Bianchi, Sahar Farzanfar, Gloria Milena Fernandez-Nieto, Alexa Becker, Tara Capel, Frances Liddell, Shelby Hagemann, Ned Cooper, Sungyeon Hong, Li Lin, Eduardo Benitez Sandoval, Anna Brynskov, Hubert Dariusz Zając, Zhuying Li, Tianyi Zhang, Arngeir Berge",
-      "url": "https://www.semanticscholar.org/paper/475e4e260103e184edb504ff7ca4d57d4582393e",
-      "venue": "International Conference on Multimodal Interaction",
-      "date": "2025-10-12",
-      "relevance": 9,
-      "category": "human_ai_collab",
-      "background": "생성 AI 기술이 일상 환경에서 멀티모달 상호작용을 가능하게 함에 따라, 이러한 시스템이 인간-컴퓨터 상호작용을 관계적, 사회적, 시스템적 측면에서 어떻게 재구성하는지 이해할 필요가 있다. 조합 이론에 기반한 시나리오 기반 디자인 팩을 개발하여 인간-생성AI 관계를 탐구한다.",
-      "methods": "3단계 프로세스(Prepare, Make, Reflect)로 구조화된 디자인 팩을 개발하고, ACM 워크샵(22명), 다학제 디자인 세션(20명), HCI 수업(260명)에서 평가했다. 참가자들은 프로토타이핑, 분석, 비판적 성찰을 통해 새로운 사회기술적 구성을 탐구했다.",
-      "results": "참가자들은 권력, 주체성, 가시성, 돌봄과 관련된 관계적 문제를 드러내는 시나리오를 생성했다. 디자인 팩이 포용적이고 사회적으로 책임감 있는 멀티모달 인간-생성AI 관계 탐구를 지원하는 것으로 나타났다.",
-      "conclusion": "멀티모달 인간-생성AI 관계에 대한 관계적 탐구를 발전시키고, 더 포용적이고 사회적으로 책임감 있는 접근을 지원하는 탐구 프레임워크와 함께 디자인 팩을 기여한다.",
-      "connection": "This work directly connects to human-AI partnership research by providing methodological tools for understanding power dynamics and relational aspects in AI interactions, particularly relevant for community social service contexts."
-    },
-    {
-      "number": 2,
-      "title": "Supporting Design Reasoning in AI-assisted Interface Prototyping for HCI Research",
-      "authors": "Eunhye Kim, Minju Yoo, Jenny C Yang, DaEun Choi",
-      "url": "https://www.semanticscholar.org/paper/ea71b45c6191f23f62f4a370109a43b17b7feecf",
-      "venue": "Proceedings of the Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems",
-      "date": "2026-04-13",
-      "relevance": 8,
-      "category": "human_ai_collab",
-      "background": "최근 AI 프로토타이핑 도구들이 간단한 프롬프트로 인터페이스를 빠르게 생성할 수 있지만, HCI 연구자들이 필요로 하는 중간 단계의 디자인 추론과정이 생략되는 문제가 있다. 대안 탐색, 트레이드오프 평가, 근거 제시 등의 과정이 필요하다.",
-      "methods": "시나리오 기반 디자인 이론에 기반한 노드 기반 프로토타이핑 도구 ProtoFlow를 개발했다. 시나리오 구성 요소를 통한 상호작용 디자인 구조화, 디자인 변수 노드를 통한 탐색 지원, 레이어를 통한 연구 목표 통합을 제공한다.",
-      "results": "6명의 HCI 연구자와의 예비 연구에서 시나리오 구성 요소가 고수준 의도와 구체적 명세를 연결하는데 도움이 되고, 디자인 변수가 의사결정 근거를 외재화하며, 레이어가 상향식 디자인과 목표 명확성에 대한 성찰을 가능하게 함을 발견했다.",
-      "conclusion": "단계별 적절한 추상화, 하향식과 상향식 디자인 간의 양방향 반복, 이전 연구에 기반한 디자인 근거 마련 등의 시사점을 논의한다.",
-      "connection": "This research addresses the need for transparent and reasoned AI-assisted design processes, which is crucial for community organizations to understand and trust AI tools in public benefit navigation systems."
-    },
-    {
-      "number": 3,
-      "title": "Probing More-Than-Human Representation in Crisis Resilience Planning: An HCI Researcher Perspective",
-      "authors": "Tram Thi Minh Tran, Adrian Wong, Callum Parker, Carlos Alfredo Tirado Cortes, Marius Hoggenmueller, Soojeong Yoo, Nate Zettna, Joel Fredericks",
-      "url": "https://arxiv.org/abs/2603.02514",
-      "venue": "Proceedings of the Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems",
-      "date": "2026-03-03",
-      "relevance": 8,
-      "category": "participatory_design",
-      "background": "위기 회복력 계획에서 비인간 종과 생태 시스템을 참여적 과정에 포함하는 방법에 대한 긴급한 질문들이 제기되고 있으나, 이러한 과정들은 여전히 인간 중심적이다. 비인간 관점을 대표하는 방법을 탐구한다.",
-      "methods": "HCI 연구자들과의 워크샵을 진행하여 위기 상황에서 인간 이상의 대표성 접근 방식을 검토했다. 음성 기반 대화 에이전트와 몰입형 구현 프로토타입 등 두 가지 디자인 프로브와 시나리오 기반 토론을 결합했다.",
-      "results": "참가자들은 시스템 사용성보다는 음성, 구현, 사실성과 같은 대표적 선택과 참여적 계획 과정에서의 잠재적 역할을 숙고하는데 집중했다. 비인간에게 '목소리'를 부여하는 것이 중립적 번역 행위가 아니라 정당성, 권위성, 진정성 간의 긴장을 야기하는 디자인 도전임을 발견했다.",
-      "conclusion": "HCI 연구자들이 더인간적 대표성을 어떻게 접근하는지에 대한 경험적 통찰을 제공하며, 이러한 접근 방식이 위기 회복력 맥락에서 참여적 디자인에 미치는 영향을 논의한다.",
-      "connection": "This work connects to participatory design research by exploring representation challenges, which is highly relevant for ensuring inclusive participation of non-technical stakeholders in community service systems."
-    },
-    {
-      "number": 4,
-      "title": "Fostering Design–Policy Collaboration through Contestation: An Adversarial Futuring Method",
-      "authors": "Xinyan Yu, Marius Hoggenmueller, Tram Thi Minh Tran, M. Tomitsch",
-      "url": "https://arxiv.org/abs/2603.28331",
-      "venue": "Proceedings of the Extended Abstracts of the 2026 CHI Conference on Human Factors in Computing Systems",
-      "date": "2026-03-30",
-      "relevance": 7,
-      "category": "participatory_design",
-      "background": "신기술은 기술 디자인과 정책 간의 긴밀한 협력을 요구하는 사회기술적 긴장을 야기한다. 디자인과 정책 관점 간의 대립을 구조화하여 디자인-정책 참여를 지원하는 시나리오 기반 워크샵 방법을 소개한다.",
-      "methods": "자율 이동성 도메인에서 12명의 HCI 연구자와 워크샵을 진행하여 방법을 실제로 탐구하고 시연했다. 적대적 미래화 방법이 실제로 어떻게 작동하는지 보여주었다.",
-      "results": "적대적 미래화 방법이 변화하는 해악을 드러내고, 정책 추상화를 상황화된 사용으로 번역하며, 근거 있는 정책 추론을 유지하면서 극단적 아이디어를 정당화할 수 있음을 보여주었다.",
-      "conclusion": "대립을 통한 HCI-정책 협력을 지원하는 재사용 가능하고 탐구적인 방법을 기여하며, 이는 신기술 도메인 전반에 걸쳐 적용될 수 있다.",
-      "connection": "This methodology is valuable for navigating policy implications in public benefit systems, helping bridge the gap between technical AI solutions and public service policies."
-    },
-    {
-      "number": 5,
-      "title": "What Happened to Scenario-Based Design in HCI?: A Scoping Review",
-      "authors": "John M. Carroll, J. Jo, Jiyoon Kim, Ya-Fang Lin, Ester Chen",
-      "url": "https://www.semanticscholar.org/paper/0f855dce9d2a6a1cbe0411de3d52812bd602af7b",
-      "venue": "Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems",
-      "date": "2026-04-13",
-      "relevance": 6,
-      "category": "participatory_design",
-      "background": "시나리오 기반 디자인(SBD)은 1990년대 초 HCI에서 개발되어 35년간 사용되어왔다. 인간 활동 에피소드를 설명하는 내러티브인 시나리오를 HCI 전문가들을 위한 강력한 디자인 도구로 사용할 것을 권장했다.",
-      "methods": "2015-2025년 기간에 집중하여 SBD의 시간에 따른 역할을 검토하는 범위 검토를 수행했다. SIGCHI 커뮤니티에서 SBD의 발전과 적용을 분석했다.",
-      "results": "SBD는 이전 수십 년과 같은 디자인 및 방법론적 주제를 계속 발전시켜왔지만, 새로운 주제들도 통합했다. 다양한 이해관계자 참여, 인간 가치와 관점 강조, 비판적이고 상상력 있는 분석 촉진 등의 역할을 계속하고 있다.",
-      "conclusion": "SBD가 HCI에서 지속적으로 진화하고 새로운 도전과 기회에 적응하고 있음을 보여준다. 향후 연구 방향과 SBD의 잠재적 발전 방향을 제시한다.",
-      "connection": "This review provides foundational understanding of scenario-based design methods that are crucial for participatory design approaches in community-centered AI system development."
-    },
-    {
-      "number": 6,
-      "title": "Perceived Trust and Professional Identity Threat in AI-Based Clinical Decision Support Systems: Scenario-Based Experimental Study on AI Process Design Features",
-      "authors": "Sophia Ackerhans, Kai Wehkamp, Rainer Petzina, Daniel Dumitrescu, Carsten Schultz",
-      "url": "https://www.semanticscholar.org/paper/d6440f52d09aa92be43824bfce1ecb848a117e25",
-      "venue": "JMIR Formative Research",
-      "date": "2025-03-26",
-      "relevance": 6,
-      "category": "human_ai_collab",
-      "background": "의료 분야의 AI 기반 시스템인 임상 의사결정 지원 시스템(CDSS)이 유망한 결과를 보여주고 있지만, AI 통합이 의료 전문가의 정체성에 도전하고 기술에 대한 제한된 신뢰를 야기하여 시스템 거부로 이어질 수 있다.",
-      "methods": "292명의 의대생과 다양한 전문 분야의 경험 있는 의사를 대상으로 3요인 웹 기반 피험자 간 시나리오 기반 실험을 수행했다. AI 프로세스 디자인 기능이 의사의 AI 솔루션 신뢰와 전문적 정체성 위협 인식에 미치는 영향을 탐구했다.",
-      "results": "AI 기반 CDSS의 설명가능성, 임상 워크플로우로의 통합 깊이, AI 시스템 유도 의료 결정에 대한 의사의 책임 등이 신뢰와 정체성 위협에 영향을 미치는 것으로 나타났다.",
-      "conclusion": "의료 AI 시스템 설계에서 의사의 신뢰와 전문적 정체성을 고려한 디자인 원칙의 중요성을 강조한다. AI 시스템의 성공적인 채택을 위한 인간 중심 접근의 필요성을 제시한다.",
-      "connection": "This research provides insights into trust and professional identity dynamics that are crucial for understanding how community service workers might adopt AI tools in public benefit navigation systems."
-    }
-  ]
+  "papers": []
 }
