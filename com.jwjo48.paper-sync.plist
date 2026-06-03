@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  LaunchAgent: papers/ → iCloud Obsidian vault 자동 동기화
+  설치 위치: ~/Library/LaunchAgents/com.jwjo48.paper-sync.plist
+  ⚠️ 아래 /Users/YOUR_USERNAME 두 군데를 본인 경로로 바꾸세요.
+     (또는 메시지의 heredoc 명령으로 자동 생성)
+
+  로드:   launchctl load  ~/Library/LaunchAgents/com.jwjo48.paper-sync.plist
+  해제:   launchctl unload ~/Library/LaunchAgents/com.jwjo48.paper-sync.plist
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.jwjo48.paper-sync</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/YOUR_USERNAME/daily-paper-digest/sync_to_obsidian.sh</string>
+    </array>
+
+    <!-- 로그인 시 1회 실행 -->
+    <key>RunAtLoad</key>
+    <true/>
+
+    <!-- 이후 1시간(3600초)마다 실행 -->
+    <key>StartInterval</key>
+    <integer>3600</integer>
+
+    <key>StandardOutPath</key>
+    <string>/Users/YOUR_USERNAME/Library/Logs/paper-sync.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/YOUR_USERNAME/Library/Logs/paper-sync.log</string>
+</dict>
+</plist>
