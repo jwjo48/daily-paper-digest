@@ -112,6 +112,8 @@ Notre Dame 대학교 HCI 포스닥 연구자:
 
 파일명: `papers/<폴더명>/<slugified-title>.md`
 
+> slug 규칙: 소문자, 특수문자 제거, 공백→하이픈. **최대 120자, 단어 중간에서 자르지 말고 마지막 하이픈(단어 경계)에서 자름**, 끝 하이픈 제거. (process_digest_reply.py `_slugify` 와 동일)
+
 ```markdown
 ---
 title: "논문 제목"

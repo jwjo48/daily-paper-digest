@@ -179,12 +179,17 @@ def _generate_paper_note(paper: dict, today: str) -> str:
     return "\n".join(lines)
 
 
-def _slugify(text: str) -> str:
-    """파일명에 사용 가능한 슬러그 생성"""
+def _slugify(text: str, limit: int = 120) -> str:
+    """파일명에 사용 가능한 슬러그 생성 (단어 경계에서 자름)"""
     # 특수문자 제거, 공백을 하이픈으로
     slug = re.sub(r"[^\w\s-]", "", text.lower())
     slug = re.sub(r"[-\s]+", "-", slug).strip("-")
-    return slug[:80]  # 파일명 길이 제한
+    if len(slug) <= limit:
+        return slug
+    cut = slug[:limit]
+    if "-" in cut:
+        cut = cut.rsplit("-", 1)[0]
+    return cut.strip("-")
 
 
 def _category_emoji(category: str) -> str:

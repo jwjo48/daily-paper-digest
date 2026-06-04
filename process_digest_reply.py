@@ -221,11 +221,16 @@ def parse_reply(text: str, folder_map: dict[str, str], num_papers: int,
 
 # ─── Markdown writer ─────────────────────────────────────────────────────────
 
-def _slugify(text: str) -> str:
+def _slugify(text: str, limit: int = 120) -> str:
     text = text.lower()
     text = re.sub(r"[^\w\s-]", "", text)
-    text = re.sub(r"[\s_-]+", "-", text)
-    return text.strip("-")[:80]
+    text = re.sub(r"[\s_-]+", "-", text).strip("-")
+    if len(text) <= limit:
+        return text
+    cut = text[:limit]
+    if "-" in cut:
+        cut = cut.rsplit("-", 1)[0]  # 마지막 하이픈에서 잘라 단어 경계 유지
+    return cut.strip("-")
 
 
 def _yaml_escape(text: str) -> str:
