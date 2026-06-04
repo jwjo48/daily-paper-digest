@@ -6,9 +6,9 @@ venue: "ABDIMAS: Jurnal Pengabdian Masyarakat"
 relevance: 6
 date: 2025-07-31
 category: participatory_design
-tags: [paper, participatory_design, participatory-approaches, ai-ethics-education, digital-literacy, experiential-learning, youth-engagement, community-program]
+tags: [paper, participatory_design, participatory-approaches, ai-ethics-education, digital-literacy, experiential-learning, youth-engagement, community-program, ai-literacy, youth-education, ethics-education]
 thoughts: "AI literacy, participatory approaches"
-thought_tags: []
+thought_tags: [ai-literacy, participatory-approaches, youth-education, ethics-education]
 status: unread
 ---
 
