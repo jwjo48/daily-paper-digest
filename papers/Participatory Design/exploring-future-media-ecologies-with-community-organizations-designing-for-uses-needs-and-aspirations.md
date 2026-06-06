@@ -6,9 +6,9 @@ venue: "Proceedings of the 12th International Conference on Communities & Techno
 relevance: 7
 date: 2025-07-20
 category: participatory_design
-tags: [paper, participatory_design, media-technologies, community-organizations, participatory-media, 취약-커뮤니티, outreach]
+tags: [paper, participatory_design, media-technologies, community-organizations, participatory-media, 취약-커뮤니티, outreach, grassroots-media, community-outreach, organizational-media]
 thoughts: "community orgs"
-thought_tags: []
+thought_tags: [community-organizations, grassroots-media, community-outreach, organizational-media]
 status: unread
 ---
 
