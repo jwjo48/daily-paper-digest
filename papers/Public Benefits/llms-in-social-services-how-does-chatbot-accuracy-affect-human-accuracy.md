@@ -1,12 +1,12 @@
 ---
 title: "LLMs in social services: How does chatbot accuracy affect human accuracy?"
-authors: ""
-url: "http://arxiv.org/abs/2603.11213v1"
-venue: "arXiv"
+authors: "Jennah Gosciak, Eric Giannella, Zhao-Yu Guo, Michael Chen, Allison Koenecke"
+url: "https://arxiv.org/abs/2603.11213"
+venue: "Unknown"
 relevance: 10
-date: 2026-03-01
-category: public_benefits_tech
-tags: [paper, public_benefits_tech, llm-public-benefits, snap, caseworker-support, decision-accuracy, vulnerable-populations, human-ai-accuracy]
+date: 2026-03-11
+category: llm_applications
+tags: [paper, llm_applications, llm-navigation, public-benefits, caseworker-accuracy, snap, 취약계층]
 thoughts: ""
 thought_tags: []
 status: unread
@@ -14,24 +14,24 @@ status: unread
 
 # LLMs in social services: How does chatbot accuracy affect human accuracy?
 
-**저자:** 
-**발표:** arXiv (2026-03-01)
-**링크:** [논문](http://arxiv.org/abs/2603.11213v1)
+**저자:** Jennah Gosciak, Eric Giannella, Zhao-Yu Guo, Michael Chen, Allison Koenecke
+**발표:** Unknown (2026-03-11)
+**링크:** [논문](https://arxiv.org/abs/2603.11213)
 
 ## 🎯 배경/목적
-SNAP 등 복잡한 사회 서비스 자격 요건을 이해하기 어려워하는 비영리 케이스워커를 위해 LLM 챗봇의 효과를 연구했다. 덜 일반적인 상황의 클라이언트에게 더 나은 도움을 줄 수 있는지 조사했다.
+사회서비스 프로그램(SNAP 등)의 복잡한 자격 요건을 이해하기 어려워하는 상황에서, 비영리 케이스워커들이 LLM 기반 챗봇을 활용해 클라이언트에게 더 나은 도움을 제공할 가능성을 탐구했다.
 
 ## 🔬 방법
-770개의 어려운 다중선택 벤치마크 질문 데이터셋을 만들고, 로스앤젤레스 비영리 아웃리치 조직 케이스워커와 무작위 실험을 실시했다. 대조군과 챗봇 제안을 받은 치료군으로 나눠 정확성을 비교했다.
+770개의 어려운 질문으로 벤치마크 데이터셋을 구축하고, 로스앤젤레스 비영리 조직 케이스워커들을 대상으로 챗봇 제안 유무에 따른 무작위 실험을 진행했다.
 
 ## 📊 결과
-대조군 평균 정확도는 49%였으며, 치료군은 챗봇 제안으로 정확성이 향상됐다. 챗봇 정확성이 인간 케이스워커 성능에 직접 영향을 미쳤다.
+챗봇 없는 대조군은 평균 49% 정확도를 보였으나, 챗봇 제안을 받은 처치군은 더 높은 정확도를 달성했다.
 
 ## 💡 결론
-LLM 챗봇이 사회 서비스에서 케이스워커 정확성을 향상시킬 수 있으나, 챗봇 정확도가 핵심 성공 요인임을 확인했다.
+LLM 기반 챗봇이 케이스워커의 정확성 향상에 기여할 수 있으며, 취약계층을 위한 사회서비스 접근성 개선에 활용될 수 있음을 보여준다.
 
 ## 🔗 연구 연관성
-This aligns with my research on LLM-based public benefits navigation systems and how AI affects service delivery accuracy in vulnerable populations.
+This directly examines LLM-based systems for public benefits navigation and their effect on social service workers' accuracy in helping vulnerable populations.
 
 ## 🧠 내 생각
 
