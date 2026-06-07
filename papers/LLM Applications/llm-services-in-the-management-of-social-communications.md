@@ -8,7 +8,7 @@ date: 2025-03-13
 category: llm_applications
 tags: [paper, llm_applications, social-communications, behavioral-economics, cultural-context, citizen-empowerment, 의사소통-관리, policy-communication, social-management, public-messaging, government-communication]
 thoughts: "policy communication"
-thought_tags: [policy-communication, social-management, public-messaging, government-communication]
+thought_tags: [policy-communication, social-management]
 status: unread
 ---
 

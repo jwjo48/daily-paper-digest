@@ -6,9 +6,9 @@ venue: "Journal of technology in human services"
 relevance: 8
 date: 2025-01-02
 category: human_ai_collab
-tags: [paper, human_ai_collab, responsible-ai, human-services, risk-assessment, ethical-integration, community-organizations, local-llm, social-work, research-connection, human-services-ai]
+tags: [paper, human_ai_collab, responsible-ai, human-services, risk-assessment, ethical-integration, community-organizations, local-llm, social-work, research-connection, human-services-ai, 소셜워크-연구, reddit-연구, 휴먼서비스-ai]
 thoughts: "r/socialwork research랑 관련"
-thought_tags: [social-work, research-connection, human-services-ai]
+thought_tags: [소셜워크-연구, reddit-연구, 휴먼서비스-ai]
 status: unread
 ---
 
