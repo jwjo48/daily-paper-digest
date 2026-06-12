@@ -6,9 +6,9 @@ venue: "Journal of technology in human services"
 relevance: 9
 date: 2025-01-02
 category: human_ai_collab
-tags: [paper, human_ai_collab, human-services, responsible-ai, risk-assessment, ethics-framework, ai-integration, social-work]
+tags: [paper, human_ai_collab, human-services, responsible-ai, risk-assessment, ethics-framework, ai-integration, social-work, ai-in-social-service, social-work-ai, responsible-ai-integration, human-services-ai]
 thoughts: "ai use in social service"
-thought_tags: []
+thought_tags: [ai-in-social-service, social-work-ai, responsible-ai-integration, human-services-ai]
 status: unread
 ---
 

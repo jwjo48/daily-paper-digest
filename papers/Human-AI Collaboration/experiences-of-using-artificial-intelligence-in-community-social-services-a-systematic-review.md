@@ -6,9 +6,9 @@ venue: "The social science"
 relevance: 10
 date: 2026-05-30
 category: human_ai_collab
-tags: [paper, human_ai_collab, community-social-services, human-ai-collaboration, systematic-review, decision-support, social-work, vulnerable-populations]
+tags: [paper, human_ai_collab, community-social-services, human-ai-collaboration, systematic-review, decision-support, social-work, vulnerable-populations, ai-in-social-service, community-social-service, ai-integration, social-work-ai]
 thoughts: "ai use in social service"
-thought_tags: []
+thought_tags: [ai-in-social-service, community-social-service, ai-integration, social-work-ai]
 status: unread
 ---
 
