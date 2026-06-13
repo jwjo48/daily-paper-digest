@@ -6,9 +6,9 @@ venue: "Journal of technology in human services"
 relevance: 9
 date: 2025-01-02
 category: human_ai_collab
-tags: [paper, human_ai_collab, human-services, responsible-ai, risk-assessment, ethics-framework, ai-integration, social-work, ai-in-social-service, social-work-ai, responsible-ai-integration, human-services-ai]
-thoughts: "ai use in social service"
-thought_tags: [ai-in-social-service, social-work-ai, responsible-ai-integration, human-services-ai]
+tags: [paper, human_ai_collab, human-services, responsible-ai, risk-assessment, ethics-framework, ai-integration, social-work, ai-in-social-service, social-work-ai, responsible-ai-integration, human-services-ai, ethical-integration, community-organizations, local-llm, research-connection, 소셜워크-연구, reddit-연구, 휴먼서비스-ai]
+thoughts: "ai use in social service / r/socialwork research랑 관련"
+thought_tags: [ai-in-social-service, social-work-ai, responsible-ai-integration, human-services-ai, 소셜워크-연구, reddit-연구, 휴먼서비스-ai]
 status: unread
 ---
 
@@ -34,7 +34,7 @@ AI 애플리케이션을 여러 위험 차원에서 평가하는 세밀한 프�
 This framework for responsible AI integration in human services organizations directly supports my research on ethical Human-AI partnerships in community social services.
 
 ## 🧠 내 생각
-ai use in social service
+ai use in social service / r/socialwork research랑 관련
 
 ---
 ## 메모
