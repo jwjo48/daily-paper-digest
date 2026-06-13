@@ -6,9 +6,9 @@ venue: "ACM SIGCHI Italian Chapter International Conference on Computer-Human In
 relevance: 7
 date: 2025-10-06
 category: human_ai_collab
-tags: [paper, human_ai_collab, public-administration, rag-systems, human-centered-design, public-sector-ai, user-trust]
+tags: [paper, human_ai_collab, public-administration, rag-systems, human-centered-design, public-sector-ai, user-trust, 공공부문, 인간중심-ai, 신뢰-구축, ai-설계]
 thoughts: "공공부문에서의 인간중심 ai 설계와 신뢰 구축"
-thought_tags: []
+thought_tags: [공공부문, 인간중심-ai, 신뢰-구축, ai-설계]
 status: unread
 ---
 
